@@ -3,8 +3,8 @@ package product
 import (
 	"errors"
 	"fmt"
-	"github.com/lcxking/doudian_sdk/product/spec"
-	"github.com/lcxking/doudian_sdk/unit"
+	"github.com/z-vip/doudian_sdk/product/spec"
+	"github.com/z-vip/doudian_sdk/unit"
 	"strconv"
 	"strings"
 	"time"

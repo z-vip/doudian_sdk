@@ -1,6 +1,6 @@
 package order
 
-import "github.com/lcxking/doudian_sdk/unit"
+import "github.com/z-vip/doudian_sdk/unit"
 
 type ArgLogisticsAdd struct {
 	OrderID       unit.OrderID   `paramName:"order_id"`         // 父订单ID，由orderList接口返回

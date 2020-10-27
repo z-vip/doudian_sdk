@@ -1,12 +1,12 @@
 package doudian_sdk
 
 import (
-	"github.com/lcxking/doudian_sdk/aftersale"
-	"github.com/lcxking/doudian_sdk/order"
-	"github.com/lcxking/doudian_sdk/product"
-	"github.com/lcxking/doudian_sdk/product/sku"
-	"github.com/lcxking/doudian_sdk/product/spec"
-	"github.com/lcxking/doudian_sdk/unit"
+	"github.com/z-vip/doudian_sdk/aftersale"
+	"github.com/z-vip/doudian_sdk/order"
+	"github.com/z-vip/doudian_sdk/product"
+	"github.com/z-vip/doudian_sdk/product/sku"
+	"github.com/z-vip/doudian_sdk/product/spec"
+	"github.com/z-vip/doudian_sdk/unit"
 	"sync"
 	"testing"
 	"time"

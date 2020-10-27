@@ -2,7 +2,7 @@ package sku
 
 import (
 	"errors"
-	"github.com/lcxking/doudian_sdk/unit"
+	"github.com/z-vip/doudian_sdk/unit"
 	"log"
 	"strconv"
 	"strings"
