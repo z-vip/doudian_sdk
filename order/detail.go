@@ -1,7 +1,7 @@
 package order
 
 import (
-	"github.com/lcxking/doudian_sdk/unit"
+	"github.com/z-vip/doudian_sdk/unit"
 )
 
 // Detail 订单信息

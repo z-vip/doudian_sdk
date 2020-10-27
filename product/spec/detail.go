@@ -1,8 +1,8 @@
 package spec
 
 import (
-	"github.com/lcxking/doudian_sdk/product/sku"
-	"github.com/lcxking/doudian_sdk/unit"
+	"github.com/z-vip/doudian_sdk/product/sku"
+	"github.com/z-vip/doudian_sdk/unit"
 )
 
 // 规格关系

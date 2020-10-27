@@ -1,6 +1,6 @@
 package aftersale
 
-import "github.com/lcxking/doudian_sdk/unit"
+import "github.com/z-vip/doudian_sdk/unit"
 
 type ArgAfterSaleFirmReceive struct {
 	OrderID  unit.OrderID `paramName:"order_id"`          // 子订单ID

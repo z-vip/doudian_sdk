@@ -13,8 +13,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/lcxking/doudian_sdk"
-	"github.com/lcxking/doudian_sdk/product/spec"
+	"github.com/z-vip/doudian_sdk"
+	"github.com/z-vip/doudian_sdk/product/spec"
 )
 
 func main() {

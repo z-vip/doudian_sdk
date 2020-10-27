@@ -1,8 +1,8 @@
 package aftersale
 
 import (
-	"github.com/lcxking/doudian_sdk/order"
-	"github.com/lcxking/doudian_sdk/unit"
+	"github.com/z-vip/doudian_sdk/order"
+	"github.com/z-vip/doudian_sdk/unit"
 )
 
 type ResponseAfterSaleRefundProcessDetail struct {
