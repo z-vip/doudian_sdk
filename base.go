@@ -323,3 +323,56 @@ func ReplaceSpecial(param string) string {
 	param = strings.ReplaceAll(param, ">", "\\u00ce")
 	return param
 }
+
+// ExchangeAccessToken 通过 授权码 换取 access_token.
+// https://op.jinritemai.com/docs/guide-docs/9/22
+func (b *BaseApp) ExchangeAccessToken(code string) (*App, error) {
+	app := App{}
+	body := url.Values{}
+	body.Add("app_id", b.Key)
+	body.Add("app_secret", b.Secret)
+	body.Add("code", code)
+	body.Add("grant_type", "authorization_code")
+	resp, err := http.Get(GatewayURL + "/oauth2/access_token?" + body.Encode())
+	if err != nil {
+		return nil, err
+	}
+	var ret BaseResp
+	if err := json.NewDecoder(resp.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	if err := mapstructure.Decode(ret.Data, &app); err != nil {
+		return nil, err
+	}
+	b.accessToken = &app.AccessToken
+	app.base = b
+	app.CreatedAt = time.Now().Unix()
+	return &app, nil
+}
+
+// RefreshAccessToken 通过 refreshToken 获取新的 access_token.
+// https://op.jinritemai.com/docs/guide-docs/9/22
+func (b *BaseApp) RefreshAccessToken(refreshToken string) (*App, error) {
+	app := App{}
+	body := url.Values{}
+	body.Add("app_id", b.Key)
+	body.Add("app_secret", b.Secret)
+	body.Add("refresh_token", refreshToken)
+	body.Add("grant_type", "refresh_token")
+	resp, err := http.Get(GatewayURL + "/oauth2/refresh_token?" + body.Encode())
+	if err != nil {
+		return nil, err
+	}
+	var ret BaseResp
+	if err := json.NewDecoder(resp.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	if err := mapstructure.Decode(ret.Data, &app); err != nil {
+		return nil, err
+	}
+	b.accessToken = &app.AccessToken
+	app.base = b
+	app.CreatedAt = time.Now().Unix()
+
+	return &app, nil
+}

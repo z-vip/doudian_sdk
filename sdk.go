@@ -9,17 +9,40 @@ import (
 	"github.com/z-vip/doudian_sdk/product/sku"
 	"github.com/z-vip/doudian_sdk/product/spec"
 	"github.com/z-vip/doudian_sdk/unit"
+	"time"
 )
 
 type App struct {
 	base         *BaseApp
 	AccessToken  string `mapstructure:"access_token"`
-	ExpiresIn    uint32 `mapstructure:"expires_in"`
+	ExpiresIn    int64  `mapstructure:"expires_in"`
+	CreatedAt    int64  `mapstructure:"-"`
 	RefreshToken string `mapstructure:"refresh_token"`
 	Scope        string `mapstructure:"scope"`
 	ShopID       uint64 `mapstructure:"shop_id"`
 	ShopName     string `mapstructure:"shop_name"`
 	Error        error  `mapstructure:"-"`
+}
+
+// TokenExpired 判断access_token是否过期
+// 由于网络的延时 和 分布式服务器之间的时间可能不是绝对同步, access_token 过期时间留了一个缓冲区
+func (a *App) AccessTokenExpired() bool {
+	bufTime := 0
+
+	switch {
+	case a.ExpiresIn > 60*60:
+		bufTime = 60 * 20
+	case a.ExpiresIn > 60*30:
+		bufTime = 60 * 10
+	case a.ExpiresIn > 60*15:
+		bufTime = 60 * 5
+	case a.ExpiresIn > 60*5:
+		bufTime = 60
+	case a.ExpiresIn > 60:
+		bufTime -= 20
+	}
+
+	return time.Now().Unix() >= a.CreatedAt+a.ExpiresIn-int64(bufTime)
 }
 
 // ShopBrandList 获取店铺的已授权品牌列表
