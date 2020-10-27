@@ -19,7 +19,7 @@ type App struct {
 	CreatedAt    int64  `mapstructure:"-"`
 	RefreshToken string `mapstructure:"refresh_token"`
 	Scope        string `mapstructure:"scope"`
-	ShopID       uint64 `mapstructure:"shop_id"`
+	ShopID       int64  `mapstructure:"shop_id"`
 	ShopName     string `mapstructure:"shop_name"`
 	Error        error  `mapstructure:"-"`
 }
