@@ -19,7 +19,7 @@ type App struct {
 	CreatedAt    int64  `mapstructure:"-"`
 	RefreshToken string `mapstructure:"refresh_token"`
 	Scope        string `mapstructure:"scope"`
-	ShopID       int64  `mapstructure:"shop_id"`
+	ShopID       uint64 `mapstructure:"shop_id"`
 	ShopName     string `mapstructure:"shop_name"`
 	Error        error  `mapstructure:"-"`
 }
@@ -43,6 +43,10 @@ func (a *App) AccessTokenExpired() bool {
 	}
 
 	return time.Now().Unix() >= a.CreatedAt+a.ExpiresIn-int64(bufTime)
+}
+
+func (a *App) SetBase(base *BaseApp) {
+	a.base = base
 }
 
 // ShopBrandList 获取店铺的已授权品牌列表
