@@ -46,6 +46,12 @@ func NewBaseApp(k, s string) *BaseApp {
 	return &BaseApp{Key: k, Secret: s, gatewayURL: GatewayURL}
 }
 
+// SetAccessToken 重置抖音小店access_token
+func (b *BaseApp) SetAccessToken(t string) *BaseApp {
+	b.accessToken = &t
+	return b
+}
+
 // SetGatewayURL 重置抖音小店网关地址
 func (b *BaseApp) SetGatewayURL(u string) *BaseApp {
 	b.gatewayURL = u

@@ -45,6 +45,24 @@ func (a *App) AccessTokenExpired() bool {
 	return time.Now().Unix() >= a.CreatedAt+a.ExpiresIn-int64(bufTime)
 }
 
+// RefreshAccessToken 通过 refreshToken 获取新的 access_token.
+// https://op.jinritemai.com/docs/guide-docs/9/22
+func (a *App) RefreshAccessToken() error {
+	app, err := a.base.RefreshAccessToken(a.RefreshToken)
+	if err != nil {
+		return err
+	}
+	a.base.accessToken = &app.AccessToken
+	a.AccessToken = app.AccessToken
+	a.RefreshToken = app.RefreshToken
+	a.ExpiresIn = app.ExpiresIn
+	a.CreatedAt = app.CreatedAt
+	a.Scope = app.Scope
+	a.ShopID = app.ShopID
+	a.ShopName = app.RefreshToken
+	return nil
+}
+
 func (a *App) SetBase(base *BaseApp) {
 	a.base = base
 }
