@@ -48,6 +48,10 @@ func (a *App) AccessTokenExpired() bool {
 // RefreshAccessToken 通过 refreshToken 获取新的 access_token.
 // https://op.jinritemai.com/docs/guide-docs/9/22
 func (a *App) RefreshAccessToken() error {
+	if a.RefreshToken == "" {
+		return errors.New("RefreshToken 为空")
+	}
+
 	app, err := a.base.RefreshAccessToken(a.RefreshToken)
 	if err != nil {
 		return err
