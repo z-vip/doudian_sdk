@@ -328,6 +328,19 @@ func (a *App) OrderLogisticsCompanyList() (logistics.ResponseLogisticsCompanyLis
 	return body, nil
 }
 
+// OrderAddOrderRemark 添加订单备注，给订单加旗标
+// https://op.jinritemai.com/docs/api-docs/15/141
+func (a *App) OrderAddOrderRemark(id unit.OrderID, remark string, IsAddStar string, star string) error {
+	arg := ParamMap{"order_id": id, "remark": remark}
+	if IsAddStar != "" {
+		arg["is_add_star"] = IsAddStar
+	}
+	if star != "" {
+		arg["star"] = star
+	}
+	return a.base.NewRequest("order.addOrderRemark", arg, nil)
+}
+
 // OrderLogisticsAdd 订单发货
 // https://op.jinritemai.com/docs/api-docs/16/77
 func (a *App) OrderLogisticsAdd(arg order.ArgLogisticsAdd) error {
@@ -455,7 +468,7 @@ func (a *App) AfterSaleAddOrderRemark(id unit.OrderID, remark string) error {
 // https://op.jinritemai.com/docs/api-docs/17/96
 func (a *App) AfterSaleRefundProcessDetail(id unit.OrderID) (aftersale.ResponseAfterSaleRefundProcessDetail, error) {
 	var body aftersale.ResponseAfterSaleRefundProcessDetail
-	err := a.base.NewRequest("afterSale.addOrderRemark", ParamMap{"order_id": id}, &body)
+	err := a.base.NewRequest("afterSale.refundProcessDetail", ParamMap{"order_id": id}, &body)
 	return body, err
 }
 
@@ -471,5 +484,5 @@ func (a *App) AfterSaleBuyerRefund(arg aftersale.ArgAfterSaleBuyerRefund) error 
 			return errors.New("arg.Evidence required")
 		}
 	}
-	return a.base.NewRequest("afterSale.addOrderRemark", arg, nil)
+	return a.base.NewRequest("afterSale.buyerRefund", arg, nil)
 }
