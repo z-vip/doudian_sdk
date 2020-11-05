@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseAfterSaleRefundProcessDetail struct {
-	OrderInfo         OrderInfo         `mapstructure:"order_info"`
+	OrderInfo         Order             `mapstructure:"order_info"`
 	Process           ProcessInfo       `mapstructure:"process_info"`
 	AfterSaleInfo     Info              `mapstructure:"aftersale_info"`
 	Logs              []Log             `mapstructure:"logs"`
@@ -48,8 +48,8 @@ type Log struct {
 	Evidence   []string `mapstructure:"evidence"`    // 凭证图片列表
 }
 
-// OrderInfo 子订单信息
-type OrderInfo struct {
+// Order 子订单信息
+type Order struct {
 	OrderID     unit.OrderID `mapstructure:"order_id"`     // 订单ID
 	PID         unit.OrderID `mapstructure:"pid"`          // 父订单ID
 	OrderStatus order.SS     `mapstructure:"order_status"` // 订单状态
