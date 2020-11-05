@@ -8,6 +8,7 @@ import (
 type ResponseAfterSaleRefundProcessDetail struct {
 	OrderInfo         order.Detail      `mapstructure:"order_info"`
 	Process           ProcessInfo       `mapstructure:"process_info"`
+	AfterSaleInfo     Info              `mapstructure:"aftersale_info"`
 	Logs              []Log             `mapstructure:"logs"`
 	RefundTotalAmount unit.Price        `mapstructure:"refund_total_amount"`
 	RefundPostAmount  unit.Price        `mapstructure:"refund_post_amount"`
@@ -30,6 +31,13 @@ type ProcessInfo struct {
 	LogisticsName   string   `mapstructure:"logistics_name"`   // 退货快递公司
 	AfterSaleID     uint64   `mapstructure:"aftersale_id"`     // 售后单ID
 	AfterSaleStatus ASS      `mapstructure:"aftersale_status"` // 售后单状态
+	RefundType      uint8    `mapstructure:"refund_type"`      // 表示金额怎么退给买家
+	RefundStatus    uint8    `mapstructure:"refund_status"`    // 表示退款到账进度
+}
+
+type Info struct {
+	AfterSaleType uint8  `mapstructure:"afterdale_type"`      //售后类型：0售后退货退款，1售后仅退款，2售前仅退款
+	RefundStatus  string `mapstructure:"aftersale_type_text"` //售后类型文案
 }
 
 type Log struct {
