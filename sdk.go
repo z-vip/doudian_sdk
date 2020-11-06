@@ -71,6 +71,13 @@ func (a *App) SetBase(base *BaseApp) {
 	a.base = base
 }
 
+func (a *App) GetRequestUrl() (uri string) {
+	if a.base == nil {
+		uri = a.base.RequestUrl
+	}
+	return
+}
+
 // ShopBrandList 获取店铺的已授权品牌列表
 // https://op.jinritemai.com/docs/api-docs/13/54
 func (a *App) ShopBrandList() {
