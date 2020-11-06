@@ -8,6 +8,7 @@ import (
 type Detail struct {
 	OrderID          unit.OrderID `mapstructure:"order_id"`           // 订单ID
 	ShopID           uint64       `mapstructure:"shop_id"`            // 店铺ID
+	AuthorId         uint64       `mapstructure:"auth_or_id"`         // 达人号ID
 	OpenID           interface{}  `mapstructure:"open_id"`            // 在抖音小程序下单，买家的抖音小程序ID TODO 不知道是什么类型
 	PostAddr         Address      `mapstructure:"post_addr"`          // 收件人地址
 	PostCode         string       `mapstructure:"post_code"`          // 邮政编码
@@ -26,7 +27,7 @@ type Detail struct {
 	ExpShipTime      uint64       `mapstructure:"exp_ship_time"`      // 订单最晚发货时间 unix时间戳
 	CancelReason     string       `mapstructure:"cancel_reason"`      // 订单取消原因
 	PayType          PT           `mapstructure:"pay_type"`           // 支付类型 (0：货到付款，1：微信，2：支付宝）
-	PayTime          string       `mapstructure:"pay_time"`           // 支付时间 string型unix时间戳
+	PayTime          string       `mapstructure:"pay_time"`           // 支付时间 string型,例如:2020-11-05 11:24:08
 	PostAmount       unit.Price   `mapstructure:"post_amount"`        // 邮费金额 (单位: 分)
 	CouponAmount     unit.Price   `mapstructure:"coupon_amount"`      // 平台优惠券金额 (单位: 分)
 	CouponInfo       []Coupon     `mapstructure:"coupon_info"`        // 优惠券详情
@@ -34,11 +35,13 @@ type Detail struct {
 	ShopFullCampaign interface{}  `mapstructure:"shop_full_campaign"` // TODO 不知道干麻用的 未知的一个字段
 	OrderTotalAmount unit.Price   `mapstructure:"order_total_amount"` // 订单实付金额（不包含运费）
 	IsComment        unit.BoolStr `mapstructure:"is_comment"`         // 是否评价 (1:已评价)
+	IsInsurance      bool         `mapstructure:"is_insurance"`       //是否有退货运费险
 	UrgeCnt          uint8        `mapstructure:"urge_cnt"`           // 催单次数
 	BType            BT           `mapstructure:"b_type"`             // 订单APP渠道
 	SubBType         SBT          `mapstructure:"sub_b_type"`         // 订单来源类型 0:未知 1:app 2:小程序 3:h5
 	CBiz             CB           `mapstructure:"c_biz"`              // 订单业务类型
 	CType            interface{}  `mapstructure:"c_type"`             // TODO 不知道干麻用的 未知的一个字段
+	ChildNum         uint8        `mapstructure:"child_num"`          //子订单数量
 	Child            []Child      `mapstructure:"child"`              // 子订单列表
 }
 
@@ -48,25 +51,28 @@ func (d Detail) GetParentID() unit.OrderID {
 
 // Child 子订单信息
 type Child struct {
-	Detail            `mapstructure:",squash"`
-	PID               unit.OrderID      `mapstructure:"pid"`                // 父订单ID
-	OutProductID      uint64            `mapstructure:"out_product_id"`     // 该子订单购买的商品外部id
-	OutSkuID          uint64            `mapstructure:"out_sku_id"`         // 该子订单购买的商品外部 sku_id
-	ProductName       string            `mapstructure:"product_name"`       // 商品名称
-	ProductPic        string            `mapstructure:"product_pic"`        // 商品图片
-	ComboID           unit.SkuID        `mapstructure:"combo_id"`           // 该子订单购买的商品 sku_id
-	ComboAmount       unit.Price        `mapstructure:"combo_amount"`       // 该子订单所购买的sku的售价
-	ComboNum          uint16            `mapstructure:"combo_num"`          // 该子订单所购买的sku的数量
-	Code              string            `mapstructure:"code"`               // 该子订单购买的商品的编码 code
-	SpecDesc          unit.PropertyOPTS `mapstructure:"spec_desc"`          // 该子订单所属商品规格描述
-	FinalStatus       SS                `mapstructure:"final_status"`       // 子订单状态
-	PreSaleType       interface{}       `mapstructure:"pre_sale_type"`      // 订单预售类型 (1:全款预售订单)
-	CouponMetaID      string            `mapstructure:"coupon_meta_id"`     // 优惠券id
-	CampaignID        string            `mapstructure:"campaign_id"`        // 活动id
-	CampaignInfo      []Campaign        `mapstructure:"campaign_info"`      // 活动细则 (title为活动标题)
-	WarehouseID       interface{}       `mapstructure:"warehouse_id"`       // 仓库ID
-	OutWarehouseID    interface{}       `mapstructure:"out_warehouse_id"`   // 仓库外部ID
-	WarehouseSupplier interface{}       `mapstructure:"warehouse_supplier"` // 供应商ID
+	Detail             `mapstructure:",squash"`
+	PID                unit.OrderID      `mapstructure:"pid"`                  // 父订单ID
+	OutProductID       uint64            `mapstructure:"out_product_id"`       // 该子订单购买的商品外部id
+	OutSkuID           uint64            `mapstructure:"out_sku_id"`           // 该子订单购买的商品外部 sku_id
+	ProductId          string            `mapstructure:"product_id"`           // 商品id
+	ProductName        string            `mapstructure:"product_name"`         // 商品名称
+	ProductPic         string            `mapstructure:"product_pic"`          // 商品图片
+	ComboID            unit.SkuID        `mapstructure:"combo_id"`             // 该子订单购买的商品 sku_id
+	ComboAmount        unit.Price        `mapstructure:"combo_amount"`         // 该子订单所购买的sku的售价
+	ComboNum           uint16            `mapstructure:"combo_num"`            // 该子订单所购买的sku的数量
+	Code               string            `mapstructure:"code"`                 // 该子订单购买的商品的编码 code
+	SpecDesc           unit.PropertyOPTS `mapstructure:"spec_desc"`            // 该子订单所属商品规格描述
+	FinalStatus        SS                `mapstructure:"final_status"`         // 子订单状态
+	PreSaleType        interface{}       `mapstructure:"pre_sale_type"`        // 订单预售类型 (1:全款预售订单)
+	CouponMetaID       string            `mapstructure:"coupon_meta_id"`       // 优惠券id
+	CampaignID         string            `mapstructure:"campaign_id"`          // 活动id
+	CampaignInfo       []Campaign        `mapstructure:"campaign_info"`        // 活动细则 (title为活动标题)
+	WarehouseID        interface{}       `mapstructure:"warehouse_id"`         // 仓库ID
+	OutWarehouseID     interface{}       `mapstructure:"out_warehouse_id"`     // 仓库外部ID
+	WarehouseSupplier  interface{}       `mapstructure:"warehouse_supplier"`   // 供应商ID
+	PlatformFullAmount unit.Price        `mapstructure:"platform_full_amount"` // 该子订单所使用的平台满减金额
+	TotalAmount        unit.Price        `mapstructure:"total_amount"`         // 子订单实付金额
 }
 
 func (c Child) GetParentID() unit.OrderID {
