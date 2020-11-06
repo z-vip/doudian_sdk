@@ -8,7 +8,7 @@ import (
 type Detail struct {
 	OrderID          unit.OrderID `mapstructure:"order_id"`           // 订单ID
 	ShopID           uint64       `mapstructure:"shop_id"`            // 店铺ID
-	AuthorId         uint64       `mapstructure:"auth_or_id"`         // 达人号ID
+	AuthorId         uint64       `mapstructure:"author_id"`          // 达人号ID
 	OpenID           interface{}  `mapstructure:"open_id"`            // 在抖音小程序下单，买家的抖音小程序ID TODO 不知道是什么类型
 	PostAddr         Address      `mapstructure:"post_addr"`          // 收件人地址
 	PostCode         string       `mapstructure:"post_code"`          // 邮政编码
