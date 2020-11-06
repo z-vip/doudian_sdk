@@ -72,7 +72,7 @@ func (a *App) SetBase(base *BaseApp) {
 }
 
 func (a *App) GetRequestUrl() (uri string) {
-	if a.base == nil {
+	if a.base != nil {
 		uri = a.base.RequestUrl
 	}
 	return
