@@ -50,19 +50,19 @@ type Log struct {
 
 // Order 子订单信息
 type Order struct {
-	OrderID     unit.OrderID `mapstructure:"order_id"`     // 订单ID
-	PID         unit.OrderID `mapstructure:"pid"`          // 父订单ID
-	OrderStatus order.SS     `mapstructure:"order_status"` // 订单状态
-	FinalStatus order.SS     `mapstructure:"final_status"` // 子订单状态
-	StatusDesc  string       `mapstructure:"status_desc"`  // 退款状态对应的描述文案
-	CreateTime  string       `mapstructure:"create_time"`  // 订单创建时间
-	ReceiptTime string       `mapstructure:"receipt_time"` // 订单确认收货时间,可能为空字符串
-	ComboNum    uint16       `mapstructure:"combo_num"`    // 下单的sku购买数量
-	ComboAmount unit.Price   `mapstructure:"combo_amount"` // 下单时的sku单价
-	TotalAmount unit.Price   `mapstructure:"total_amount"` // 下单时sku对应的总价
-	PayAmount   unit.Price   `mapstructure:"pay_amount"`   // 下单时改单实际支付的金额(sku总价扣除优惠后的)
-	ShopID      uint64       `mapstructure:"shop_id"`      // 店铺ID
-	ProductID   uint64       `mapstructure:"product_id"`   // 商品id
-	ProductName string       `mapstructure:"product_name"` // 商品名称
-	ProductImg  string       `mapstructure:"product_img"`  // 商品图片
+	OrderID     uint64     `mapstructure:"order_id"`     // 订单ID
+	PID         uint64     `mapstructure:"pid"`          // 父订单ID
+	OrderStatus order.SS   `mapstructure:"order_status"` // 订单状态
+	FinalStatus order.SS   `mapstructure:"final_status"` // 子订单状态
+	StatusDesc  string     `mapstructure:"status_desc"`  // 退款状态对应的描述文案
+	CreateTime  string     `mapstructure:"create_time"`  // 订单创建时间
+	ReceiptTime string     `mapstructure:"receipt_time"` // 订单确认收货时间,可能为空字符串
+	ComboNum    uint16     `mapstructure:"combo_num"`    // 下单的sku购买数量
+	ComboAmount unit.Price `mapstructure:"combo_amount"` // 下单时的sku单价
+	TotalAmount unit.Price `mapstructure:"total_amount"` // 下单时sku对应的总价
+	PayAmount   unit.Price `mapstructure:"pay_amount"`   // 下单时改单实际支付的金额(sku总价扣除优惠后的)
+	ShopID      uint64     `mapstructure:"shop_id"`      // 店铺ID
+	ProductID   uint64     `mapstructure:"product_id"`   // 商品id
+	ProductName string     `mapstructure:"product_name"` // 商品名称
+	ProductImg  string     `mapstructure:"product_img"`  // 商品图片
 }
