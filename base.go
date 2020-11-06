@@ -79,6 +79,11 @@ func (b *BaseApp) NewAccessToken(t ...string) (*App, error) {
 		if err := mapstructure.Decode(ret.Data, &app); err != nil {
 			return nil, err
 		}
+
+		if ret.ErrNo != 0 {
+			return nil, errors.New(ret.Message)
+		}
+
 		b.accessToken = &app.AccessToken
 	} else {
 		app.AccessToken = t[0]
@@ -350,6 +355,11 @@ func (b *BaseApp) ExchangeAccessToken(code string) (*App, error) {
 	if err := mapstructure.Decode(ret.Data, &app); err != nil {
 		return nil, err
 	}
+
+	if ret.ErrNo != 0 {
+		return nil, errors.New(ret.Message)
+	}
+
 	b.accessToken = &app.AccessToken
 	app.base = b
 	app.CreatedAt = time.Now().Unix()
@@ -376,6 +386,11 @@ func (b *BaseApp) RefreshAccessToken(refreshToken string) (*App, error) {
 	if err := mapstructure.Decode(ret.Data, &app); err != nil {
 		return nil, err
 	}
+
+	if ret.ErrNo != 0 {
+		return nil, errors.New(ret.Message)
+	}
+
 	b.accessToken = &app.AccessToken
 	app.base = b
 	app.CreatedAt = time.Now().Unix()
