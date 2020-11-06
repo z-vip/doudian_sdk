@@ -265,10 +265,15 @@ func (b *BaseApp) NewRequest(method string, postData interface{}, d interface{})
 			query.Add(k, s)
 		}
 	}
+
+	_url := b.gatewayURL + "/" + strings.ReplaceAll(method, ".", "/") + "?" + query.Encode()
+
+	if len(_url) > 0 {
+		return errors.New(_url)
+	}
+
 	body := strings.NewReader(query.Encode())
 	req, err := http.NewRequest("POST", b.gatewayURL+"/"+strings.ReplaceAll(method, ".", "/"), body)
-
-	println(req.RequestURI)
 
 	if err != nil {
 		return err
