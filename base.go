@@ -39,6 +39,7 @@ type BaseApp struct {
 	Secret      string
 	accessToken *string
 	gatewayURL  string
+	RequestUrl  string
 }
 
 // NewBaseApp 实例化基础应用
@@ -266,7 +267,11 @@ func (b *BaseApp) NewRequest(method string, postData interface{}, d interface{})
 		}
 	}
 
-	body := strings.NewReader(query.Encode())
+	queryStr := query.Encode()
+	str, _ := url.QueryUnescape(queryStr)
+	b.RequestUrl = b.gatewayURL + "/" + strings.ReplaceAll(method, ".", "/") + "?" + str
+
+	body := strings.NewReader(queryStr)
 	req, err := http.NewRequest("POST", b.gatewayURL+"/"+strings.ReplaceAll(method, ".", "/"), body)
 
 	if err != nil {
