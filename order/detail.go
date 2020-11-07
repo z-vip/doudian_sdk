@@ -64,7 +64,7 @@ type Child struct {
 	Code               string            `mapstructure:"code"`                 // 该子订单购买的商品的编码 code
 	SpecDesc           unit.PropertyOPTS `mapstructure:"spec_desc"`            // 该子订单所属商品规格描述
 	FinalStatus        SS                `mapstructure:"final_status"`         // 子订单状态
-	PreSaleType        interface{}       `mapstructure:"pre_sale_type"`        // 订单预售类型 (1:全款预售订单)
+	PreSaleType        uint8             `mapstructure:"pre_sale_type"`        // 订单预售类型 (1:全款预售订单)
 	CouponMetaID       string            `mapstructure:"coupon_meta_id"`       // 优惠券id
 	CampaignID         string            `mapstructure:"campaign_id"`          // 活动id
 	CampaignInfo       []Campaign        `mapstructure:"campaign_info"`        // 活动细则 (title为活动标题)
