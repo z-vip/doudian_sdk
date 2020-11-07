@@ -291,9 +291,9 @@ func (a *App) OrderDetail(o unit.Order) (order.Detail, error) {
 	if err := a.base.NewRequest("order.detail", ParamMap{"order_id": o.GetParentID()}, &body); err != nil {
 		return order.Detail{}, err
 	}
-	if body.Total != 1 {
-		return order.Detail{}, errors.New("order total not is 1")
-	}
+	//if body.Total != 1 {
+	//	return order.Detail{}, errors.New("order total not is 1")
+	//}
 	return body.List[0], nil
 }
 
