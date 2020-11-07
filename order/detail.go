@@ -32,7 +32,7 @@ type Detail struct {
 	CouponAmount     unit.Price   `mapstructure:"coupon_amount"`      // 平台优惠券金额 (单位: 分)
 	CouponInfo       []Coupon     `mapstructure:"coupon_info"`        // 优惠券详情
 	ShopCouponAmount unit.Price   `mapstructure:"shop_coupon_amount"` // 商家优惠券金额 (单位: 分)
-	ShopFullCampaign interface{}  `mapstructure:"shop_full_campaign"` // TODO 不知道干麻用的 未知的一个字段
+	ShopFullCampaign FullCampaign `mapstructure:"shop_full_campaign"` // 店铺满减优惠信息
 	OrderTotalAmount unit.Price   `mapstructure:"order_total_amount"` // 订单实付金额（不包含运费）
 	IsComment        unit.BoolStr `mapstructure:"is_comment"`         // 是否评价 (1:已评价)
 	IsInsurance      bool         `mapstructure:"is_insurance"`       //是否有退货运费险
@@ -101,4 +101,10 @@ type Coupon struct {
 type Campaign struct {
 	ID    string `mapstructure:"campaign_id"`
 	Title string `mapstructure:"title"`
+}
+
+// FullCampaign 店铺满减优惠信息
+type FullCampaign struct {
+	CampaignId uint64     `mapstructure:"shop_campaign_id"` //店铺满减活动ID
+	FullAmount unit.Price `mapstructure:"shop_full_amount"` //分摊到该子订单上的满减金额，单位：分
 }
