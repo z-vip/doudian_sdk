@@ -1,4 +1,4 @@
-package Msg
+package msg
 
 import "github.com/z-vip/doudian_sdk/unit"
 
