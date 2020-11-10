@@ -125,17 +125,17 @@ type TradeCanceled struct {
 
 //退款消息必定包含的通用信息
 type RefundBase struct {
-	Sid              uint64 `mapstructure:"s_id"`               // 子订单ID
-	Pid              uint64 `mapstructure:"p_id"`               // 父订单ID
-	ShopID           uint64 `mapstructure:"shop_id"`            //  店铺ID
-	AfterSaleId      uint64 `mapstructure:"aftersale_id"`       //  售后单id
-	AfterSaleStatus  uint8  `mapstructure:"aftersale_status"`   //售后状态
-	AfterSaleType    uint8  `mapstructure:"aftersale_type"`     //售后类型
-	RefundAmount     uint8  `mapstructure:"refund_amount"`      //申请退款的金额（含运费）
-	RefundPostAmount uint8  `mapstructure:"refund_post_amount"` //申请退的运费金额
-	RefundVoucherNum uint8  `mapstructure:"refund_voucher_num"` //申请退款的卡券的数量
-	ReasonCode       uint8  `mapstructure:"reason_code"`        //申请售后原因码
-	LatestRecord     string `mapstructure:"latest_record"`      //最近一条操作记录
+	Sid              uint64     `mapstructure:"s_id"`               // 子订单ID
+	Pid              uint64     `mapstructure:"p_id"`               // 父订单ID
+	ShopID           uint64     `mapstructure:"shop_id"`            //  店铺ID
+	AfterSaleId      uint64     `mapstructure:"aftersale_id"`       //  售后单id
+	AfterSaleStatus  uint8      `mapstructure:"aftersale_status"`   //售后状态
+	AfterSaleType    uint8      `mapstructure:"aftersale_type"`     //售后类型
+	RefundAmount     unit.Price `mapstructure:"refund_amount"`      //申请退款的金额（含运费）
+	RefundPostAmount unit.Price `mapstructure:"refund_post_amount"` //申请退的运费金额
+	RefundVoucherNum uint8      `mapstructure:"refund_voucher_num"` //申请退款的卡券的数量
+	ReasonCode       uint8      `mapstructure:"reason_code"`        //申请售后原因码
+	LatestRecord     string     `mapstructure:"latest_record"`      //最近一条操作记录
 }
 
 /**
