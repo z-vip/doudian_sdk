@@ -118,3 +118,105 @@ type TradeCanceled struct {
 	CancelReason string   `mapstructure:"cancel_reason"` //取消原因
 	Biz          uint8    `mapstructure:"biz"`           //订单业务类型
 }
+
+////////////////////////////////////////////////////
+//以下为售后相关消息
+////////////////////////////////////////////////////
+
+//退款消息必定包含的通用信息
+type RefundBase struct {
+	Sid              uint64 `mapstructure:"s_id"`               // 子订单ID
+	Pid              uint64 `mapstructure:"p_id"`               // 父订单ID
+	ShopID           uint64 `mapstructure:"shop_id"`            //  店铺ID
+	AfterSaleId      uint64 `mapstructure:"aftersale_id"`       //  售后单id
+	AfterSaleStatus  uint8  `mapstructure:"aftersale_status"`   //售后状态
+	AfterSaleType    uint8  `mapstructure:"aftersale_type"`     //售后类型
+	RefundAmount     uint8  `mapstructure:"refund_amount"`      //申请退款的金额（含运费）
+	RefundPostAmount uint8  `mapstructure:"refund_post_amount"` //申请退的运费金额
+	RefundVoucherNum uint8  `mapstructure:"refund_voucher_num"` //申请退款的卡券的数量
+	ReasonCode       uint8  `mapstructure:"reason_code"`        //申请售后原因码
+	LatestRecord     string `mapstructure:"latest_record"`      //最近一条操作记录
+}
+
+/**
+买家发起售后申请消息
+买家发起交易逆向申请时，推送此消息。具体场景如下：
+	订单未发货，买家申请整单退款时
+	订单已发货，买家申请售后仅退款时
+	订单已发货，买家申请售后退货时
+*/
+
+type RefundTradeCreated struct {
+	RefundBase
+	ApplyTime uint64 `mapstructure:"apply_time"` //售后申请时间
+}
+
+/**
+同意退款消息
+以下场景会推送此消息：
+	买家在发货前申请整单退款，卖家同意退款或超时自动同意退款时
+	买家在发货后申请仅退款，卖家同意退款或超时自动同意退款时
+	买家在发货后申请申请退货，卖家确认收货或系统超时自动确认收货时
+*/
+type RefundAgreed struct {
+	RefundBase
+	AgreeTime uint64 `mapstructure:"agree_time"` //同意退款时间
+}
+
+/**
+同意退货申请消息
+已发货订单，买家申请退货，卖家同意或系统超时同意该退货申请时，推送此消息
+*/
+type ReturnApplyAgreed struct {
+	RefundBase
+	Addr      uint8  `mapstructure:"addr"`       //退货地址
+	AgreeTime uint64 `mapstructure:"agree_time"` //同意退款时间
+}
+
+/**
+买家退货给卖家消息
+已发货订单，买家退货申请被同意，买家提交退货物流成功时，推送此消息
+*/
+type BuyerReturnGoods struct {
+	RefundBase
+	Logistics  uint64 `mapstructure:"logistics"`   //退货物流单号
+	ReturnTime uint64 `mapstructure:"return_time"` //退货物流提交时间
+}
+
+/**
+拒绝退款消息
+买家在发货前申请整单退款，卖家拒绝
+买家在发货后申请仅退款，卖家拒绝
+买家在发货后申请申请退货，买家发货后，卖家拒绝收货
+*/
+type RefundRefused struct {
+	RefundBase
+	RefuseTime uint64 `mapstructure:"refuse_time"` //拒绝时间
+}
+
+/**
+拒绝退货申请消息
+当买家在发货后申请退货退款，卖家拒绝申请时，推送此消息
+*/
+type ReturnApplyRefused struct {
+	RefundBase
+	RefuseTime uint64 `mapstructure:"refuse_time"` //拒绝时间
+}
+
+/**
+退款成功消息
+当商家同意退款后，实际退款到账时，会推送此消息
+*/
+type RefundSuccess struct {
+	RefundBase
+	SuccessTime uint64 `mapstructure:"success_time"` //退款成功时间¬
+}
+
+/**
+售后关闭消息
+当买家取消申请或系统超时机制导致退款取消时，会推送此消息
+*/
+type RefundClosed struct {
+	RefundBase
+	CloseTime uint64 `mapstructure:"close_time"` //售后关闭时间
+}
