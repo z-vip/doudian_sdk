@@ -36,7 +36,7 @@ type ProcessInfo struct {
 }
 
 type Info struct {
-	AfterSaleType     uint8  `mapstructure:"afterdale_type"`      //售后类型：0售后退货退款，1售后仅退款，2售前仅退款
+	AfterSaleType     uint8  `mapstructure:"aftersale_type"`      //售后类型：0售后退货退款，1售后仅退款，2售前仅退款
 	AfterSaleTypeText string `mapstructure:"aftersale_type_text"` //售后类型文案
 }
 

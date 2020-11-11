@@ -285,7 +285,10 @@ func (b *BaseApp) NewRequest(method string, postData interface{}, d interface{})
 	var ret BaseResp
 	//r, _ := ioutil.ReadAll(resp.Body)
 	//fmt.Printf("%s\n\n", r)
-	if err := json.NewDecoder(resp.Body).Decode(&ret); err != nil {
+	dec := json.NewDecoder(resp.Body)
+	//数字默认是处理为float64类型的，这就导致了int64可能会丢失精度，这时候要将处理的数字转换成json.Number的形式
+	dec.UseNumber()
+	if err := dec.Decode(&ret); err != nil {
 		return err
 	}
 	if ret.ErrNo != 0 || ret.Message != "success" {
