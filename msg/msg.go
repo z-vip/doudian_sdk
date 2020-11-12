@@ -169,7 +169,7 @@ type RefundAgreed struct {
 */
 type ReturnApplyAgreed struct {
 	RefundBase
-	Addr      uint8  `json:"addr"`       //退货地址
+	Addr      string `json:"addr"`       //退货地址
 	AgreeTime uint64 `json:"agree_time"` //同意退款时间
 }
 
@@ -179,7 +179,7 @@ type ReturnApplyAgreed struct {
 */
 type BuyerReturnGoods struct {
 	RefundBase
-	Logistics  uint64 `json:"logistics"`   //退货物流单号
+	Logistics  string `json:"logistics"`   //退货物流单号
 	ReturnTime uint64 `json:"return_time"` //退货物流提交时间
 }
 
