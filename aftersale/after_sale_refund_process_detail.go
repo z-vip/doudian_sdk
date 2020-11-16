@@ -6,13 +6,13 @@ import (
 )
 
 type ResponseAfterSaleRefundProcessDetail struct {
-	OrderInfo         Order             `mapstructure:"order_info"`
-	Process           ProcessInfo       `mapstructure:"process_info"`
-	AfterSaleInfo     Info              `mapstructure:"aftersale_info"`
-	Logs              []Log             `mapstructure:"logs"`
-	RefundTotalAmount unit.Price        `mapstructure:"refund_total_amount"`
-	RefundPostAmount  unit.Price        `mapstructure:"refund_post_amount"`
-	ProcessList       []ProcessInfoList `mapstructure:"process_info_list"`
+	OrderInfo         Order         `mapstructure:"order_info"`
+	Process           ProcessInfo   `mapstructure:"process_info"`
+	AfterSaleInfo     Info          `mapstructure:"aftersale_info"`
+	Logs              []Log         `mapstructure:"logs"`
+	RefundTotalAmount unit.Price    `mapstructure:"refund_total_amount"`
+	RefundPostAmount  unit.Price    `mapstructure:"refund_post_amount"`
+	ProcessList       []ProcessInfo `mapstructure:"process_info_list"`
 }
 
 type ProcessInfoList struct {
