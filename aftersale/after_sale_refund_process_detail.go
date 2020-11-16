@@ -16,8 +16,9 @@ type ResponseAfterSaleRefundProcessDetail struct {
 }
 
 type ProcessInfoList struct {
-	Process ProcessInfo `mapstructure:"process_info"`
-	Logs    []Log       `mapstructure:"process_info"`
+	ProcessInfo
+	//Process ProcessInfo `mapstructure:"process_info"`
+	//Logs    []Log       `mapstructure:"process_info"`
 }
 
 type ProcessInfo struct {
