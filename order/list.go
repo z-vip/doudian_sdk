@@ -9,8 +9,8 @@ import (
 // ArgList OrderList方法的参数
 type ArgList struct {
 	Status    SS           `paramName:"order_status,optional"`
-	StartTime time.Time    `paramName:"start_time"`
-	EndTime   time.Time    `paramName:"end_time"`
+	StartTime string       `paramName:"start_time"`
+	EndTime   string       `paramName:"end_time"`
 	OrderBy   string       `paramName:"order_by"`
 	IsDesc    unit.BoolInt `paramName:"is_desc,optional"`
 	Page      uint8        `paramName:"page,optional"`
