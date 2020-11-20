@@ -294,6 +294,9 @@ func (a *App) OrderDetail(o unit.Order) (order.Detail, error) {
 	//if body.Total != 1 {
 	//	return order.Detail{}, errors.New("order total not is 1")
 	//}
+	if len(body.List) == 0 {
+		return order.Detail{}, errors.New("订单不存在")
+	}
 	return body.List[0], nil
 }
 
