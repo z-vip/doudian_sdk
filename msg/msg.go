@@ -229,23 +229,22 @@ type PushMsgRequest struct {
 
 //应用订购支付成功相关信息
 type AppOrderInfo struct {
-	AppId     int64         `json:"app_id"`
+	AppId     uint64        `json:"app_id"`
 	OrderInfo PushOrderInfo `json:"order_info"`
 }
 
 type PushOrderInfo struct {
-	OrderId          int64  `json:"order_id"`           //订单唯一标识，可作幂等判断依据
-	ShopId           int64  `json:"shop_id"`            //店铺唯一标识
-	ServiceStartTime int64  `json:"service_start_time"` //购买服务之后服务的开始生效时间，时间戳，单位：秒
-	ServiceEndTime   int64  `json:"service_end_time"`   //购买服务之后服务的结束时间，时间戳，单位：秒
-	Status           int32  `json:"status"`             //1：订单待付款，4：订单取消，5：已完成
-	Phone            string `json:"phone"`              //店铺所有者的手机号
-	PayAmount        int64  `json:"pay_amount"`         //用户实际支付的金额，以分为单位
-
-	PayTime         int64       `json:"pay_time"`          //支付时间
-	OrderCreateTime int64       `json:"order_create_time"` //下单时间
-	PayType         int32       `json:"pay_type"`          //支付方式
-	PushSkuInfo     PushSkuInfo `json:"push_sku_info"`
+	OrderId          uint64      `json:"order_id"`           //订单唯一标识，可作幂等判断依据
+	ShopId           uint64      `json:"shop_id"`            //店铺唯一标识
+	ServiceStartTime int64       `json:"service_start_time"` //购买服务之后服务的开始生效时间，时间戳，单位：秒
+	ServiceEndTime   int64       `json:"service_end_time"`   //购买服务之后服务的结束时间，时间戳，单位：秒
+	Status           int32       `json:"status"`             //1：订单待付款，4：订单取消，5：已完成
+	Phone            string      `json:"phone"`              //店铺所有者的手机号
+	PayAmount        int64       `json:"pay_amount"`         //用户实际支付的金额，以分为单位
+	PayTime          int64       `json:"pay_time"`           //支付时间
+	OrderCreateTime  int64       `json:"order_create_time"`  //下单时间
+	PayType          int32       `json:"pay_type"`           //支付方式
+	PushSkuInfo      PushSkuInfo `json:"push_sku_info"`
 }
 
 type PushSkuInfo struct {
@@ -259,7 +258,7 @@ type PushSkuInfo struct {
 
 //权相关信息
 type AppAuthInfo struct {
-	ActionType int32 `json:"action_type"` // action_type=1表示关闭授权
-	AppId      int64 `json:"app_id"`
-	ShopId     int64 `json:"shop_id"`
+	ActionType int32  `json:"action_type"` // action_type=1表示关闭授权
+	AppId      uint64 `json:"app_id"`
+	ShopId     uint64 `json:"shop_id"`
 }
