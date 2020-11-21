@@ -220,3 +220,40 @@ type RefundClosed struct {
 	RefundBase
 	CloseTime uint64 `json:"close_time"` //售后关闭时间
 }
+
+//应用订购支付成功相关信息
+type AppOrderInfo struct {
+	AppId     int64         `json:"app_id"`
+	OrderInfo PushOrderInfo `json:"order_info"`
+}
+
+type PushOrderInfo struct {
+	OrderId          int64  `json:"order_id"`           //订单唯一标识，可作幂等判断依据
+	ShopId           int64  `json:"shop_id"`            //店铺唯一标识
+	ServiceStartTime int64  `json:"service_start_time"` //购买服务之后服务的开始生效时间，时间戳，单位：秒
+	ServiceEndTime   int64  `json:"service_end_time"`   //购买服务之后服务的结束时间，时间戳，单位：秒
+	Status           int32  `json:"status"`             //1：订单待付款，4：订单取消，5：已完成
+	Phone            string `json:"phone"`              //店铺所有者的手机号
+	PayAmount        int64  `json:"pay_amount"`         //用户实际支付的金额，以分为单位
+
+	PayTime         int64       `json:"pay_time"`          //支付时间
+	OrderCreateTime int64       `json:"order_create_time"` //下单时间
+	PayType         int32       `json:"pay_type"`          //支付方式
+	PushSkuInfo     PushSkuInfo `json:"push_sku_info"`
+}
+
+type PushSkuInfo struct {
+	Title        string `json:"title"`         //sku名称,所购买版本与时间的结合
+	SpecType     int32  `json:"spec_type"`     //规格名称
+	SpecValue    string `json:"spec_value"`    //规格名称
+	Price        int64  `json:"price"`         //sku的价格，以分为单位
+	Duration     int32  `json:"duration"`      //购买时间按照自然月，1个月，3个月，6个月，12个月。
+	DurationUnit int32  `json:"duration_unit"` //时长单位, 0:天，1:月，2:年
+}
+
+//权相关信息
+type AppAuthInfo struct {
+	ActionType int32 `json:"action_type"` // action_type=1表示关闭授权
+	AppId      int64 `json:"app_id"`
+	ShopId     int64 `json:"shop_id"`
+}
