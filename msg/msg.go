@@ -221,6 +221,12 @@ type RefundClosed struct {
 	CloseTime uint64 `json:"close_time"` //售后关闭时间
 }
 
+//开发者在消息推送地址指向的本地服务中，通过解析消息体，可以获取每条消息的具体信息。
+type PushMsgRequest struct {
+	MsgType int32  `json:"msg_type"` // 表示的是消息类型，1为支付成功消息通知类型，2为卖家授权类型
+	Msg     string `json:"msg"`
+}
+
 //应用订购支付成功相关信息
 type AppOrderInfo struct {
 	AppId     int64         `json:"app_id"`
