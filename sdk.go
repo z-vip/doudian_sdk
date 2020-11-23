@@ -63,7 +63,7 @@ func (a *App) RefreshAccessToken() error {
 	a.CreatedAt = app.CreatedAt
 	a.Scope = app.Scope
 	a.ShopID = app.ShopID
-	a.ShopName = app.RefreshToken
+	a.ShopName = app.ShopName
 	return nil
 }
 
