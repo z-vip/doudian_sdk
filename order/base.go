@@ -59,9 +59,13 @@ const (
 type PT uint8
 
 const (
-	COD    PT = iota // 货到付款
-	WeChat           // 微信支付
-	Alipay           // 支付宝支付
+	COD     PT = iota // 货到付款
+	WeChat            // 微信支付
+	Alipay            // 支付宝支付
+	BankPay PT = 4    //银行卡
+	Balance PT = 5    //余额
+	Fxh     PT = 8    //放心花
+	NewCard PT = 9    //新卡支付
 )
 
 ////////////////////////////////////////////////////////////////////////////////
