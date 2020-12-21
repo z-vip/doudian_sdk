@@ -499,7 +499,7 @@ func (a *App) AfterSaleBuyerRefund(arg aftersale.ArgAfterSaleBuyerRefund) error 
 
 // ProductList 查询订单账单明细
 // https://op.jinritemai.com/docs/api-docs/46/204
-func (a *App) OrderSettle(arg order.ArgSettle) (product.ResponseList, error) {
+func (a *App) OrderSettle(arg order.ArgSettle) (order.ResponseSettle, error) {
 	if arg.Size == 0 {
 		arg.Size = 10
 	}
