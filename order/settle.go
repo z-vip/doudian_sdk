@@ -2,19 +2,19 @@ package order
 
 const (
 	//查询订单账单接口的时间类型
-	STT01 int8 = 1 //结算时间
-	STT02 int8 = 2 //下单时间
+	STT01 string = "1" //结算时间
+	STT02 string = "2" //下单时间
 )
 
 // ArgList OrderList方法的参数
 type ArgSettle struct {
-	TimeType  int8   `paramName:"time_type"`
+	TimeType  string `paramName:"time_type"`
 	StartTime string `paramName:"start_time"`
 	EndTime   string `paramName:"end_time"`
-	OrderId   string `paramName:"order_id"`
-	ProductId string `paramName:"product_id"`
-	PayType   string `json:"pay_type"`
-	FlowType  string `json:"flow_type"`
+	OrderId   string `paramName:"order_id,optional"`
+	ProductId string `paramName:"product_id,optional"`
+	PayType   string `json:"pay_type,optional"`
+	FlowType  string `json:"flow_type,optional"`
 	Page      uint8  `paramName:"page,optional"`
 	Size      uint8  `paramName:"size,optional"`
 }
