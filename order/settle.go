@@ -52,11 +52,6 @@ type SettleDetail struct {
 }
 
 // ResponseSettle OrderSettle方法的响应结果
-/*type ResponseSettle struct {
-	Data SettleData `mapstructure:"data"`
-}*/
-
-// ResponseSettle OrderSettle方法的响应结果
 type ResponseSettle struct {
 	PaySettleItemList []SettleDetail `mapstructure:"pay_settle_item_list"`
 	Total             int            `mapstructure:"total"`
