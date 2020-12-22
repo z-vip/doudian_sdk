@@ -20,15 +20,15 @@ type ArgSettle struct {
 }
 
 type SettleOrderInfo struct {
-	OrderId    string `mapstructure:"order_id"`
-	CreateTime string `mapstructure:"create_time"`
-	ProductId  string `mapstructure:"product_id"`
+	PId       string `mapstructure:"p_id"`
+	OrderTime string `mapstructure:"order_time"`
+	ProductId string `mapstructure:"product_id"`
 }
 
 type SettleInfo struct {
 	SettleTime   string  `mapstructure:"settle_time"`
-	PayType      string  `mapstructure:"pay_type"`
-	FlowType     string  `mapstructure:"flow_type"`
+	PayType      uint8   `mapstructure:"pay_type"`
+	FlowType     uint8   `mapstructure:"flow_type"`
 	SettleAmount float64 `mapstructure:"settle_amount"`
 }
 
@@ -38,7 +38,7 @@ type IncomeInfo struct {
 }
 
 type OutcomeInfo struct {
-	RefundAmount        float64 `mapstructure:"refund_amount"`
+	OrderRefund         float64 `mapstructure:"order_refund"`
 	PlatformServiceFee  float64 `mapstructure:"platform_service_fee"`
 	AuthorCommission    float64 `mapstructure:"author_commission"`
 	GoodLearnChannelFee float64 `mapstructure:"good_learn_channel_fee"`
