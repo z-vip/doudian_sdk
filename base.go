@@ -42,6 +42,18 @@ type BaseApp struct {
 	RequestUrl  string
 }
 
+//NewApp 实例化应用 (appId, appSecret, accessToken, refreshToken)
+func NewApp(appId, appSecret, accessToken, refreshToken string) *App {
+	app := App{
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+	}
+	base := NewBaseApp(appId, appSecret)
+	base.accessToken = &app.AccessToken
+	app.base = base
+	return &app
+}
+
 // NewBaseApp 实例化基础应用
 func NewBaseApp(k, s string) *BaseApp {
 	return &BaseApp{Key: k, Secret: s, gatewayURL: GatewayURL}
