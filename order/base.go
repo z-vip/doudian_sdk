@@ -49,8 +49,8 @@ type OT uint8
 const (
 	OT00 OT = 0 // 普通订单
 	OT02 OT = 2 // 虚拟订单
-	OT04 OT = 4 // 电子券
-	OT05 OT = 5 // 三方核销
+	OT04 OT = 4 // 电子券/平台券码
+	OT05 OT = 5 // 三方核销/商家券码
 	OT06 OT = 6 // 服务市场
 )
 
@@ -107,6 +107,23 @@ const (
 	PiPiXia     BT = "9"  // 皮皮虾
 	DouYinJS    BT = "10" // 抖音极速版
 	TikTok      BT = "11" // 抖音海外版
+)
+
+type BTN int
+
+const (
+	ZhanWaiNew     BTN = 0  // 站外
+	HuoShanNew     BTN = 1  // 火山
+	DouYinNew      BTN = 2  // 抖音
+	TouTiaoNew     BTN = 3  // 头条
+	XiGuaNew       BTN = 4  // 西瓜
+	WeiXinNew      BTN = 5  // 微信
+	ShanGouNew     BTN = 6  // 闪购
+	TouTiaoLiteNew BTN = 7  // 头条lite版本
+	DongCheDiNew   BTN = 8  // 懂车帝
+	PiPiXiaNew     BTN = 9  // 皮皮虾
+	DouYinJSNew    BTN = 10 // 抖音极速版
+	TikTokNew      BTN = 11 // 抖音海外版
 )
 
 ////////////////////////////////////////////////////////////////////////////////

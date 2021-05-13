@@ -285,6 +285,29 @@ func (a *App) OrderList(arg order.ArgList) (order.ResponseList, error) {
 	return body, nil
 }
 
+// SearchList 新订单列表
+// https://op.jinritemai.com/docs/api-docs/15/464
+func (a *App) SearchList(arg order.ArgSearchList) (order.ResponseSearchList, error) {
+	var body order.ResponseSearchList
+	if err := a.base.NewRequest("order.searchList", arg, &body); err != nil {
+		return order.ResponseSearchList{}, err
+	}
+	return body, nil
+}
+
+// OrderDetailNew 新订单详情查询
+// https://op.jinritemai.com/docs/api-docs/15/465
+func (a *App) OrderDetailNew(o unit.Order) (order.ShopOrderDetail, error) {
+	var body order.ResponseSearchList
+	if err := a.base.NewRequest("order.orderDetail", ParamMap{"order_id": o.GetParentID()}, &body); err != nil {
+		return order.ShopOrderDetail{}, err
+	}
+	if len(body.List) == 0 {
+		return order.ShopOrderDetail{}, errors.New("订单不存在")
+	}
+	return body.List[0], nil
+}
+
 // OrderDetail 订单详情
 // https://op.jinritemai.com/docs/api-docs/15/68
 func (a *App) OrderDetail(o unit.Order) (order.Detail, error) {
