@@ -248,7 +248,8 @@ func ToParamMap(data interface{}, ret ...*ParamMap) ParamMap {
 }
 
 // NewRequest 执行请求
-func (b *BaseApp) NewRequest(method string, postData interface{}, d interface{}) error {
+func (b *BaseApp) NewRequest(method string, postData interface{}, outData interface{}) error {
+	var ret BaseResp
 	var dat = ParamMap{}
 	if postData != nil {
 		if values, ok := postData.(ParamMap); ok {
@@ -279,45 +280,37 @@ func (b *BaseApp) NewRequest(method string, postData interface{}, d interface{})
 		}
 	}
 
-	queryStr := query.Encode()
-	str, _ := url.QueryUnescape(queryStr)
-	b.RequestUrl = b.gatewayURL + "/" + strings.ReplaceAll(method, ".", "/") + "?" + str
+	//str, _ := url.QueryUnescape(queryStr)
+	b.RequestUrl = b.gatewayURL + "/" + strings.ReplaceAll(method, ".", "/")
 
-	body := strings.NewReader(queryStr)
-	req, err := http.NewRequest("POST", b.gatewayURL+"/"+strings.ReplaceAll(method, ".", "/"), body)
-
+	resp, err := http.PostForm(b.RequestUrl, query)
 	if err != nil {
 		return err
 	}
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return err
-	}
-	var ret BaseResp
-	//r, _ := ioutil.ReadAll(resp.Body)
-	//fmt.Printf("%s\n\n", r)
-	dec := json.NewDecoder(resp.Body)
+	defer resp.Body.Close()
+	//body, err := ioutil.ReadAll(resp.Body)
+	//_ = json.Unmarshal(body, &ret)
+
 	//数字默认是处理为float64类型的，这就导致了int64可能会丢失精度，这时候要将处理的数字转换成json.Number的形式
-	dec.UseNumber()
-	if err := dec.Decode(&ret); err != nil {
-		return err
-	}
+	decoder := json.NewDecoder(resp.Body)
+	decoder.UseNumber()
+	_ = decoder.Decode(&ret)
+
 	if ret.ErrNo != 0 || ret.Message != "success" {
 		return fmt.Errorf("response error %d %s", ret.ErrNo, ret.Message)
 	}
-	if d == nil {
+	if outData == nil {
 		return nil
 	}
 	if ret.Data == nil {
 		return errors.New("response error data is nil")
 	}
-	if reflect.TypeOf(d).Elem().Kind() == reflect.Interface {
+	if reflect.TypeOf(outData).Elem().Kind() == reflect.Interface {
 		rd := reflect.ValueOf(ret.Data)
-		reflect.ValueOf(d).Elem().Set(rd)
+		reflect.ValueOf(outData).Elem().Set(rd)
 		return nil
 	}
-	return mapstructure.Decode(ret.Data, d)
+	return mapstructure.Decode(ret.Data, outData)
 }
 
 // Sign 参数签名
