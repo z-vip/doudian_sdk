@@ -5,6 +5,7 @@ import (
 	"github.com/z-vip/doudian_sdk/aftersale"
 	"github.com/z-vip/doudian_sdk/logistics"
 	"github.com/z-vip/doudian_sdk/order"
+	"github.com/z-vip/doudian_sdk/orderCode"
 	"github.com/z-vip/doudian_sdk/product"
 	"github.com/z-vip/doudian_sdk/product/sku"
 	"github.com/z-vip/doudian_sdk/product/spec"
@@ -508,4 +509,18 @@ func (a *App) OrderSettle(arg order.ArgSettle) (order.ResponseSettle, error) {
 		return body, err
 	}
 	return body, nil
+}
+
+// OrderCodeDownloadOrderCodeByShop 下载bic订单码
+// https://op.jinritemai.com/docs/api-docs/51/479
+func (a *App) OrderCodeDownloadOrderCodeByShop(arg orderCode.ArgDownloadOrderCodeByShop) (body orderCode.DownloadOrderCodeByShopInfo, err error) {
+	err = a.base.NewRequest("orderCode.downloadOrderCodeByShop", arg, &body)
+	return
+}
+
+// OrderCodeErpShopBindOrderCode bic流程订单物流发货接口
+// https://op.jinritemai.com/docs/api-docs/51/480
+func (a *App) OrderCodeErpShopBindOrderCode(arg orderCode.ArgErpShopBindOrderCode) (body string, err error) {
+	err = a.base.NewRequest("orderCode.erpShopBindOrderCode", arg, &body)
+	return
 }
