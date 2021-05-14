@@ -424,6 +424,7 @@ func (b *BaseApp) RefreshAccessToken(refreshToken string) (*App, error) {
 func (b *BaseApp) RequestApi(method string, input interface{}, output interface{}) error {
 	var ret BaseResp
 	data := b.ParseParams(method, input)
+	//fmt.Println("api request:", data.Encode())
 
 	b.RequestUrl = b.gatewayURL + "/" + strings.ReplaceAll(method, ".", "/")
 	resp, err := http.PostForm(b.RequestUrl, data)
@@ -432,13 +433,12 @@ func (b *BaseApp) RequestApi(method string, input interface{}, output interface{
 	}
 	defer resp.Body.Close()
 	//body, err := ioutil.ReadAll(resp.Body)
-	//_ = json.Unmarshal(body, &ret)
+	//fmt.Println("api response:", string(body))
 
 	//数字默认是处理为float64类型的，这就导致了int64可能会丢失精度，这时候要将处理的数字转换成json.Number的形式
 	decoder := json.NewDecoder(resp.Body)
-	decoder.UseNumber()
+	//decoder.UseNumber()
 	_ = decoder.Decode(&ret)
-
 	if ret.ErrNo != 0 || ret.Message != "success" {
 		return fmt.Errorf("response error %d %s", ret.ErrNo, ret.Message)
 	}

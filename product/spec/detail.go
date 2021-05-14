@@ -59,12 +59,12 @@ type Specs struct {
 
 // Spec 商品选项信息
 type Spec struct {
-	ID     unit.SpecID `mapstructure:"id"`      // 规格创建时生成的id 父子各不相同
-	SpecID unit.SpecID `mapstructure:"spec_id"` // 项id 这个是抖音系统自带的  有：颜色、尺码、长度等 父子同值
-	Name   string      `mapstructure:"name"`    // 名称
-	PID    unit.SpecID `mapstructure:"pid"`     // 父级id 如果本身就是父级，则为0
-	IsLeaf PLeaf       `mapstructure:"is_leaf"` // 是否为父级
-	Status uint8       `mapstructure:"status"`  // todo 目前还不知道这字段是什么意思
+	ID     unit.SpecID `json:"id" mapstructure:"id"`           // 规格创建时生成的id 父子各不相同
+	SpecID unit.SpecID `json:"spec_id" mapstructure:"spec_id"` // 项id 这个是抖音系统自带的  有：颜色、尺码、长度等 父子同值
+	Name   string      `json:"name" mapstructure:"name"`       // 名称
+	PID    unit.SpecID `json:"pid" mapstructure:"pid"`         // 父级id 如果本身就是父级，则为0
+	IsLeaf PLeaf       `json:"is_leaf" mapstructure:"is_leaf"` // 是否为父级
+	Status uint8       `json:"status" mapstructure:"status"`   // todo 目前还不知道这字段是什么意思
 }
 
 // Pic 商品选项<图片表>

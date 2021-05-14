@@ -46,7 +46,7 @@ type ShopOrder struct {
 	PromotionPayAmount      int             `json:"promotion_pay_amount" mapstructure:"promotion_pay_amount"`
 	PostTel                 string          `json:"post_tel" mapstructure:"post_tel"`
 	PostReceiver            string          `json:"post_receiver" mapstructure:"post_receiver"`
-	PostAddr                string          `json:"post_addr" mapstructure:"post_addr"`
+	PostAddr                PostAddr        `json:"post_addr" mapstructure:"post_addr"`
 	ExpShipTime             int             `json:"exp_ship_time" mapstructure:"exp_ship_time"`
 	ShipTime                int             `json:"ship_time" mapstructure:"ship_time"`
 	LogisticsInfo           []LogisticsInfo `json:"logistics_info" mapstructure:"logistics_info"`
@@ -57,4 +57,17 @@ type ShopOrder struct {
 type ShopOrderDetail struct {
 	ShopOrder
 	PromotionDetail string `json:"promotion_detail" mapstructure:"promotion_detail"`
+}
+type PostAddr struct {
+	Province    Region `json:"province"`
+	City        Region `json:"city"`
+	Town        Region `json:"town"`
+	Street      Region `json:"street"`
+	Detail      string `json:"detail"`
+	ExpShipTime int    `json:"exp_ship_time"`
+	ShipTime    int    `json:"ship_time"`
+}
+type Region struct {
+	Id   string `json:"id"`
+	Name string `json:"name"`
 }

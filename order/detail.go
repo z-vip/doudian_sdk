@@ -182,22 +182,6 @@ type FullCampaign struct {
 	FullAmount unit.Price `mapstructure:"shop_full_amount"` //分摊到该子订单上的满减金额，单位：分
 }
 
-type ProductInfo struct {
-	ProductName  string     `mapstructure:"product_name"`  //商品名称
-	Price        unit.Price `mapstructure:"price"`         //商品价格
-	OuterSkuId   string     `mapstructure:"outer_sku_id"`  //商家编码
-	SkuId        int        `mapstructure:"sku_id"`        //商品skuId
-	ProductCount int        `mapstructure:"product_count"` //商品数量
-	ProductId    int        `mapstructure:"product_id"`    //商品ID
-	SkuOrderId   string     `mapstructure:"sku_order_id"`  //商品单ID
-	SkuSpecs     []SkuSpecs `mapstructure:"sku_specs"`     //规格信息
-}
-
-type SkuSpecs struct {
-	Name  string `mapstructure:"name"`
-	Value string `mapstructure:"value"`
-}
-
 type PromotionDetail struct {
 	ShopDiscountDetail     ShopDiscountDetail     `mapstructure:"shop_discount_detail"`     //店铺优惠信息
 	PlatformDiscountDetail PlatformDiscountDetail `mapstructure:"platform_discount_detail"` //平台优惠信息
@@ -216,11 +200,4 @@ type PlatformDiscountDetail struct {
 
 //todo KolDiscountDetail
 type KolDiscountDetail struct {
-}
-
-type InventoryList struct {
-	WarehouseId       string `mapstructure:"warehouse_id"`        //仓id
-	OutWarehouseId    string `mapstructure:"out_warehouse_id"`    //外部仓id
-	InventoryType     int    `mapstructure:"inventory_type"`      //库存类型，普通库存/区域库存
-	InventoryTypeDesc string `mapstructure:"inventory_type_desc"` //库存类型描述
 }
