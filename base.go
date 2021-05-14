@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/mitchellh/mapstructure"
 	"github.com/z-vip/doudian_sdk/unit"
+	"io"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -280,7 +281,7 @@ func (b *BaseApp) NewRequest(method string, postData interface{}, outData interf
 			query.Add(k, s)
 		}
 	}
-	fmt.Println("####", query.Encode())
+	//fmt.Println("####", query.Encode())
 	//str, _ := url.QueryUnescape(queryStr)
 	b.RequestUrl = b.gatewayURL + "/" + strings.ReplaceAll(method, ".", "/")
 
@@ -312,7 +313,6 @@ func (b *BaseApp) NewRequest(method string, postData interface{}, outData interf
 		return nil
 	}
 	if reflect.TypeOf(outData).Elem().Field(0).Tag.Get("json") != "" {
-		fmt.Println("+++++++++++++++")
 		dataByte, _ := json.Marshal(ret.Data)
 		return json.Unmarshal(dataByte, outData)
 	}
@@ -344,6 +344,7 @@ func Sign(param ParamMap, secret string) string {
 		signStr += fmt.Sprintf("%v%v", k, param[k])
 	}
 	signStr = ReplaceSpecial(secret + signStr + secret)
+	fmt.Println("====", signStr)
 	h := md5.New()
 	h.Write([]byte(signStr))
 	return hex.EncodeToString(h.Sum(nil))
@@ -417,4 +418,71 @@ func (b *BaseApp) RefreshAccessToken(refreshToken string) (*App, error) {
 	app.CreatedAt = time.Now().Unix()
 
 	return &app, nil
+}
+
+//请求api
+func (b *BaseApp) RequestApi(method string, input interface{}, output interface{}) error {
+	var ret BaseResp
+	data := b.ParseParams(method, input)
+
+	b.RequestUrl = b.gatewayURL + "/" + strings.ReplaceAll(method, ".", "/")
+	resp, err := http.PostForm(b.RequestUrl, data)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	//body, err := ioutil.ReadAll(resp.Body)
+	//_ = json.Unmarshal(body, &ret)
+
+	//数字默认是处理为float64类型的，这就导致了int64可能会丢失精度，这时候要将处理的数字转换成json.Number的形式
+	decoder := json.NewDecoder(resp.Body)
+	decoder.UseNumber()
+	_ = decoder.Decode(&ret)
+
+	if ret.ErrNo != 0 || ret.Message != "success" {
+		return fmt.Errorf("response error %d %s", ret.ErrNo, ret.Message)
+	}
+	if output == nil {
+		return nil
+	}
+	if ret.Data == nil {
+		return errors.New("response error data is nil")
+	}
+	//直接使用json反解析data到数据
+	dataByte, _ := json.Marshal(ret.Data)
+	return json.Unmarshal(dataByte, output)
+}
+
+func (b *BaseApp) ParseParams(method string, input interface{}) url.Values {
+	var uri = url.Values{}
+	uri.Add("app_key", b.Key)
+	uri.Add("access_token", *b.accessToken)
+
+	uri.Add("method", method)
+	paramByte, _ := json.Marshal(input)
+	paramJson := string(paramByte)
+	uri.Add("param_json", paramJson)
+	timestamp := time.Now().Format(unit.TimeYmdHis)
+	uri.Add("timestamp", timestamp)
+	v := "2"
+	uri.Add("v", v)
+	//签名
+	sign := b.CreateSign(method, paramJson, timestamp, v)
+	uri.Add("sign", sign)
+
+	return uri
+}
+func (b *BaseApp) CreateSign(method, paramJson, timestamp, v string) string {
+	//var str string = secret + "app_key6844048284663924231" + "methodproduct.list" + "param_json{\"page\":\"0\",\"size\":\"20\"}" + "timestamp2020-07-05 22:33:59" + "v2" + secret
+	str := fmt.Sprintf("%sapp_key%smethod%sparam_json%stimestamp%sv%s%s", b.Secret, b.Key, method, paramJson, timestamp, v, b.Secret)
+	return getMd5String(str)
+}
+func getMd5String(str string) string {
+	m := md5.New()
+	_, err := io.WriteString(m, str)
+	if err != nil {
+		return ""
+	}
+	arr := m.Sum(nil)
+	return fmt.Sprintf("%x", arr)
 }

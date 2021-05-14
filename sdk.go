@@ -524,7 +524,7 @@ func (a *App) OrderSettle(arg order.ArgSettle) (order.ResponseSettle, error) {
 // 订单搜索列表
 // https://op.jinritemai.com/docs/api-docs/15/464
 func (a *App) OrderSearchList(arg order.ArgSearchList) (body order.SearchListInfo, err error) {
-	err = a.base.NewRequest("order.searchList", arg, &body)
+	err = a.base.RequestApi("order.searchList", arg, &body)
 	return
 }
 
@@ -534,20 +534,20 @@ func (a *App) OrderOrderDetail(orderId string) (body order.SearchListInfo, err e
 	arg := ParamMap{
 		"order_id": orderId,
 	}
-	err = a.base.NewRequest("order.orderDetail", arg, &body)
+	err = a.base.RequestApi("order.orderDetail", arg, &body)
 	return
 }
 
 // OrderCodeDownloadOrderCodeByShop 下载bic订单码
 // https://op.jinritemai.com/docs/api-docs/51/479
 func (a *App) OrderCodeDownloadOrderCodeByShop(arg orderCode.ArgDownloadOrderCodeByShop) (body orderCode.DownloadOrderCodeByShopInfo, err error) {
-	err = a.base.NewRequest("orderCode.downloadOrderCodeByShop", arg, &body)
+	err = a.base.RequestApi("orderCode.downloadOrderCodeByShop", arg, &body)
 	return
 }
 
 // OrderCodeErpShopBindOrderCode bic流程订单物流发货接口
 // https://op.jinritemai.com/docs/api-docs/51/480
 func (a *App) OrderCodeErpShopBindOrderCode(arg orderCode.ArgErpShopBindOrderCode) (body string, err error) {
-	err = a.base.NewRequest("orderCode.erpShopBindOrderCode", arg, &body)
+	err = a.base.RequestApi("orderCode.erpShopBindOrderCode", arg, &body)
 	return
 }

@@ -2,27 +2,27 @@ package order
 
 // ArgList OrderList方法的参数
 type ArgSearchList struct {
-	Product             string             `json:"product" paramName:"product"`
-	BType               int                `json:"b_type" paramName:"b_type"`
-	AfterSaleStatusDesc string             `json:"after_sale_status_desc" paramName:"after_sale_status_desc"`
-	TrackingNo          string             `json:"tracking_no" paramName:"tracking_no"`
-	PresellType         int                `json:"presell_type" paramName:"presell_type"`
-	OrderType           int                `json:"order_type" paramName:"order_type"`
-	CreateTimeStart     int                `json:"create_time_start" paramName:"create_time_start"`
-	CreateTimeEnd       int                `json:"create_time_end" paramName:"create_time_end"`
 	AbnormalOrder       int                `json:"abnormal_order" paramName:"abnormal_order"`
-	TradeType           int                `json:"trade_type" paramName:"trade_type"`
+	AfterSaleStatusDesc string             `json:"after_sale_status_desc" paramName:"after_sale_status_desc"`
+	BType               int                `json:"b_type" paramName:"b_type"`
 	CombineStatus       []ArgCombineStatus `json:"combine_status" paramName:"combine_status"`
-	UpdateTimeStart     int                `json:"update_time_start" paramName:"update_time_start"`
-	UpdateTimeEnd       int                `json:"update_time_end" paramName:"update_time_end"`
-	Size                int                `json:"size" paramName:"size"`
-	Page                int                `json:"page" paramName:"page"`
-	OrderBy             string             `json:"order_by" paramName:"order_by"`
+	CreateTimeEnd       int                `json:"create_time_end" paramName:"create_time_end"`
+	CreateTimeStart     int                `json:"create_time_start" paramName:"create_time_start"`
 	OrderAsc            bool               `json:"order_asc" paramName:"order_asc"`
+	OrderBy             string             `json:"order_by" paramName:"order_by"`
+	OrderType           int                `json:"order_type" paramName:"order_type"`
+	Page                int                `json:"page" paramName:"page"`
+	PresellType         int                `json:"presell_type" paramName:"presell_type"`
+	Product             string             `json:"product" paramName:"product"`
+	Size                int                `json:"size" paramName:"size"`
+	TrackingNo          string             `json:"tracking_no" paramName:"tracking_no"`
+	TradeType           int                `json:"trade_type" paramName:"trade_type"`
+	UpdateTimeEnd       int                `json:"update_time_end" paramName:"update_time_end"`
+	UpdateTimeStart     int                `json:"update_time_start" paramName:"update_time_start"`
 }
 type ArgCombineStatus struct {
-	OrderStatus string `json:"order_status" paramName:"order_status"`
 	MainStatus  string `json:"main_status" paramName:"main_status"`
+	OrderStatus string `json:"order_status" paramName:"order_status"`
 }
 
 //结果
