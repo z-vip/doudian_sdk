@@ -181,23 +181,3 @@ type FullCampaign struct {
 	CampaignId uint64     `mapstructure:"shop_campaign_id"` //店铺满减活动ID
 	FullAmount unit.Price `mapstructure:"shop_full_amount"` //分摊到该子订单上的满减金额，单位：分
 }
-
-type PromotionDetail struct {
-	ShopDiscountDetail     ShopDiscountDetail     `mapstructure:"shop_discount_detail"`     //店铺优惠信息
-	PlatformDiscountDetail PlatformDiscountDetail `mapstructure:"platform_discount_detail"` //平台优惠信息
-	KolDiscountDetail      KolDiscountDetail      `mapstructure:"kol_discount_detail"`      //达人优惠信息
-}
-
-type ShopDiscountDetail struct {
-	TotalAmount        unit.Price `mapstructure:"total_amount"`         //优惠总金额
-	CouponAmount       unit.Price `mapstructure:"coupon_amount"`        //券优惠金额
-	FullDiscountAmount unit.Price `mapstructure:"full_discount_amount"` //满减金额
-}
-
-//todo PlatformDiscountDetail
-type PlatformDiscountDetail struct {
-}
-
-//todo KolDiscountDetail
-type KolDiscountDetail struct {
-}

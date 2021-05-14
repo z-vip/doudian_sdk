@@ -530,9 +530,9 @@ func (a *App) OrderSearchList(arg interface{}) (body order.SearchListInfo, err e
 
 // 订单详情
 // https://op.jinritemai.com/docs/api-docs/15/465
-func (a *App) OrderOrderDetail(orderId string) (body order.SearchListInfo, err error) {
+func (a *App) OrderOrderDetail(orderId string) (body order.OrderDetailInfo, err error) {
 	arg := ParamMap{
-		"order_id": orderId,
+		"shop_order_id": orderId,
 	}
 	err = a.base.RequestApi("order.orderDetail", arg, &body)
 	return

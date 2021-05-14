@@ -46,18 +46,25 @@ type ShopOrder struct {
 	PromotionPayAmount      int             `json:"promotion_pay_amount" mapstructure:"promotion_pay_amount"`
 	PostTel                 string          `json:"post_tel" mapstructure:"post_tel"`
 	PostReceiver            string          `json:"post_receiver" mapstructure:"post_receiver"`
-	PostAddr                PostAddr        `json:"post_addr" mapstructure:"post_addr"`
 	ExpShipTime             int             `json:"exp_ship_time" mapstructure:"exp_ship_time"`
 	ShipTime                int             `json:"ship_time" mapstructure:"ship_time"`
-	LogisticsInfo           []LogisticsInfo `json:"logistics_info" mapstructure:"logistics_info"`
-	SkuOrderList            []SkuOrder      `json:"sku_order_list" mapstructure:"sku_order_list"`
 	SellerRemarkStars       int             `json:"seller_remark_stars" mapstructure:"seller_remark_stars"`
+	PostAddr                PostAddr        `json:"post_addr" mapstructure:"post_addr"`
+	SkuOrderList            []SkuOrder      `json:"sku_order_list" mapstructure:"sku_order_list"`
+	LogisticsInfo           []LogisticsInfo `json:"logistics_info" mapstructure:"logistics_info"`
+	PostAddrJson            string          `json:"post_addr_json"`
+	SkuOrderListJson        string          `json:"sku_order_list_json"`
+	LogisticsInfoJson       string          `json:"logistics_info_json"`
 }
 
 type ShopOrderDetail struct {
 	ShopOrder
-	PromotionDetail string `json:"promotion_detail" mapstructure:"promotion_detail"`
+	CampaignInfo        []CampaignInfo  `json:"campaign_info" mapstructure:"campaign_info"`
+	PromotionDetail     PromotionDetail `json:"promotion_detail" mapstructure:"promotion_detail"`
+	CampaignInfoJson    string          `json:"campaign_info_json"`
+	PromotionDetailJson string          `json:"promotion_detail_json"`
 }
+
 type PostAddr struct {
 	Province    Region `json:"province"`
 	City        Region `json:"city"`
@@ -70,4 +77,30 @@ type PostAddr struct {
 type Region struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
+}
+
+//活动信息
+type CampaignInfo struct {
+	CampaignId   int `json:"campaign_id"`
+	CampaignType int `json:"campaign_type"`
+}
+
+type PromotionDetail struct {
+	ShopDiscountDetail     ShopDiscountDetail     `json:"shop_discount_detail" mapstructure:"shop_discount_detail"`         //店铺优惠信息
+	PlatformDiscountDetail PlatformDiscountDetail `json:"platform_discount_detail" mapstructure:"platform_discount_detail"` //平台优惠信息
+	KolDiscountDetail      KolDiscountDetail      `json:"kol_discount_detail" mapstructure:"kol_discount_detail"`           //达人优惠信息
+}
+
+type ShopDiscountDetail struct {
+	TotalAmount        int `json:"total_amount" mapstructure:"total_amount"`                 //优惠总金额
+	CouponAmount       int `json:"coupon_amount" mapstructure:"coupon_amount"`               //券优惠金额
+	FullDiscountAmount int `json:"full_discount_amount" mapstructure:"full_discount_amount"` //满减金额
+}
+
+//todo PlatformDiscountDetail
+type PlatformDiscountDetail struct {
+}
+
+//todo KolDiscountDetail
+type KolDiscountDetail struct {
 }

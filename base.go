@@ -437,7 +437,7 @@ func (b *BaseApp) RequestApi(method string, input interface{}, output interface{
 
 	//数字默认是处理为float64类型的，这就导致了int64可能会丢失精度，这时候要将处理的数字转换成json.Number的形式
 	decoder := json.NewDecoder(resp.Body)
-	//decoder.UseNumber()
+	decoder.UseNumber()
 	_ = decoder.Decode(&ret)
 	if ret.ErrNo != 0 || ret.Message != "success" {
 		return fmt.Errorf("response error %d %s", ret.ErrNo, ret.Message)
@@ -448,6 +448,7 @@ func (b *BaseApp) RequestApi(method string, input interface{}, output interface{
 	if ret.Data == nil {
 		return errors.New("response error data is nil")
 	}
+	//fmt.Println("##data##", ret.Data)
 	//直接使用json反解析data到数据
 	dataByte, _ := json.Marshal(ret.Data)
 	return json.Unmarshal(dataByte, output)
