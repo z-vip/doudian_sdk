@@ -6,9 +6,9 @@ type ArgDownloadOrderCodeByShop struct {
 }
 
 type DownloadOrderCodeByShopInfo struct {
-	IsSuccess    string `json:"is_success"`
-	ErrorDesc    string `json:"error_desc"`
-	DeliveryType int    `json:"delivery_type"`
-	ShipType     int    `json:"ship_type"`
-	OrderCode    string `json:"order_code"`
+	IsSuccess    string `json:"is_success" mapstructure:"is_success"`
+	ErrorDesc    string `json:"error_desc" mapstructure:"error_desc"`
+	DeliveryType int    `json:"delivery_type" mapstructure:"delivery_type"`
+	ShipType     int    `json:"ship_type" mapstructure:"ship_type"`
+	OrderCode    string `json:"order_code" mapstructure:"order_code"`
 }
