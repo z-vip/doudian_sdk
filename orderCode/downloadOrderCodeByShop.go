@@ -2,7 +2,7 @@ package orderCode
 
 //  DownloadOrderCodeByShop 方法的参数
 type ArgDownloadOrderCodeByShop struct {
-	OrderId string `paramName:"order_id,optional" json:"order_id,optional"`
+	OrderId string `paramName:"order_id" json:"order_id"`
 }
 
 type DownloadOrderCodeByShopInfo struct {

@@ -295,19 +295,6 @@ func (a *App) SearchList(arg order.ArgSearchList) (order.ResponseSearchList, err
 	return body, nil
 }
 
-// OrderDetailNew 新订单详情查询
-// https://op.jinritemai.com/docs/api-docs/15/465
-func (a *App) OrderDetailNew(o unit.Order) (order.ShopOrderDetail, error) {
-	var body order.ResponseSearchList
-	if err := a.base.NewRequest("order.orderDetail", ParamMap{"order_id": o.GetParentID()}, &body); err != nil {
-		return order.ShopOrderDetail{}, err
-	}
-	if len(body.List) == 0 {
-		return order.ShopOrderDetail{}, errors.New("订单不存在")
-	}
-	return body.List[0], nil
-}
-
 // OrderDetail 订单详情
 // https://op.jinritemai.com/docs/api-docs/15/68
 func (a *App) OrderDetail(o unit.Order) (order.Detail, error) {
@@ -532,6 +519,23 @@ func (a *App) OrderSettle(arg order.ArgSettle) (order.ResponseSettle, error) {
 		return body, err
 	}
 	return body, nil
+}
+
+// 订单搜索列表
+// https://op.jinritemai.com/docs/api-docs/15/464
+func (a *App) OrderSearchList(arg order.ArgSearchList) (body order.SearchListInfo, err error) {
+	err = a.base.NewRequest("order.searchList", arg, &body)
+	return
+}
+
+// 订单详情
+// https://op.jinritemai.com/docs/api-docs/15/465
+func (a *App) OrderOrderDetail(orderId string) (body order.SearchListInfo, err error) {
+	arg := ParamMap{
+		"order_id": orderId,
+	}
+	err = a.base.NewRequest("order.orderDetail", arg, &body)
+	return
 }
 
 // OrderCodeDownloadOrderCodeByShop 下载bic订单码

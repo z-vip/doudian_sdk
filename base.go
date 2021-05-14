@@ -249,6 +249,7 @@ func ToParamMap(data interface{}, ret ...*ParamMap) ParamMap {
 
 // NewRequest 执行请求
 func (b *BaseApp) NewRequest(method string, postData interface{}, outData interface{}) error {
+	//var ret BaseResp
 	var ret BaseResp
 	var dat = ParamMap{}
 	if postData != nil {
@@ -279,7 +280,7 @@ func (b *BaseApp) NewRequest(method string, postData interface{}, outData interf
 			query.Add(k, s)
 		}
 	}
-
+	fmt.Println("####", query.Encode())
 	//str, _ := url.QueryUnescape(queryStr)
 	b.RequestUrl = b.gatewayURL + "/" + strings.ReplaceAll(method, ".", "/")
 
@@ -309,6 +310,11 @@ func (b *BaseApp) NewRequest(method string, postData interface{}, outData interf
 		rd := reflect.ValueOf(ret.Data)
 		reflect.ValueOf(outData).Elem().Set(rd)
 		return nil
+	}
+	if reflect.TypeOf(outData).Elem().Field(0).Tag.Get("json") != "" {
+		fmt.Println("+++++++++++++++")
+		dataByte, _ := json.Marshal(ret.Data)
+		return json.Unmarshal(dataByte, outData)
 	}
 	return mapstructure.Decode(ret.Data, outData)
 }

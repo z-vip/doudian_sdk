@@ -17,19 +17,6 @@ type ArgList struct {
 	Size      uint8        `paramName:"size,optional"`
 }
 
-// ArgSearchList OrderList方法的参数
-type ArgSearchList struct {
-	CombineStatus   string       `paramName:"combine_status,optional"`
-	CreateTimeStart int64        `paramName:"create_time_start"`
-	CreateTimeEnd   int64        `paramName:"create_time_end"`
-	UpdateTimeStart int64        `paramName:"update_time_start"`
-	UpdateTimeEnd   int64        `paramName:"update_time_end"`
-	OrderBy         string       `paramName:"order_by"`
-	IsDesc          unit.BoolInt `paramName:"is_desc,optional"`
-	Page            int          `paramName:"page,optional"`
-	Size            int          `paramName:"size,optional"`
-}
-
 type CombineStatus struct {
 	OrderStatus string `paramName:"combine_status,optional"`
 	MainStatus  string `paramName:"main_status,optional"`
