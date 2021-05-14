@@ -26,8 +26,8 @@ type ArgSearchList struct {
 	UpdateTimeEnd   int64        `paramName:"update_time_end"`
 	OrderBy         string       `paramName:"order_by"`
 	IsDesc          unit.BoolInt `paramName:"is_desc,optional"`
-	Page            uint8        `paramName:"page,optional"`
-	Size            uint8        `paramName:"size,optional"`
+	Page            int          `paramName:"page,optional"`
+	Size            int          `paramName:"size,optional"`
 }
 
 type CombineStatus struct {
@@ -51,8 +51,8 @@ type ResponseList struct {
 
 // ResponseSearchList OrderList方法的响应结果
 type ResponseSearchList struct {
-	Count         uint32            `mapstructure:"count"`
-	Page          uint32            `mapstructure:"page"`
-	Total         uint32            `mapstructure:"total"`
+	Count         int               `mapstructure:"count"`
+	Page          int               `mapstructure:"page"`
+	Total         int               `mapstructure:"total"`
 	ShopOrderList []ShopOrderDetail `mapstructure:"shop_order_list"`
 }
