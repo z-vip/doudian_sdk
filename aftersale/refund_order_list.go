@@ -1,7 +1,6 @@
 package aftersale
 
 import (
-	"doudian_sdk/order"
 	"github.com/z-vip/doudian_sdk/unit"
 	"reflect"
 	"time"
@@ -59,7 +58,7 @@ type After struct {
 	RefundPostAmount         int                    `json:"refund_post_amount" mapstructure:"refund_post_amount" description:"退货运费 单位分"`
 	AftersaleService         []string               `json:"aftersale_service" mapstructure:"aftersale_service" description:"售后标签：七天无理由，极速退等"`
 	AftersaleServiceJson     string                 `json:"aftersale_service_json" mapstructure:"aftersale_service_json" description:"售后标签：七天无理由，极速退等"`
-	SkuSpec                  []order.SkuSpecs       `json:"sku_spec" mapstructure:"sku_spec" description:"商品规格"`
+	SkuSpec                  unit.PropertyOPTS      `json:"sku_spec" mapstructure:"sku_spec" description:"商品规格"`
 	SkuSpecJson              string                 `json:"sku_spec_json" mapstructure:"sku_spec_json" description:"商品规格"`
 	Role                     string                 `json:"role" mapstructure:"role" description:"操作角色，system：系统、service：平台客服、user：用户、shop：商家"`
 	OpType                   string                 `json:"op_type" mapstructure:"op_type" description:"操作类型"`
@@ -78,19 +77,19 @@ type After struct {
 }
 
 type Aftersale_items struct {
-	ProductName      string           `json:"product_name" mapstructure:"product_name"`
-	ProductId        int64            `json:"product_id" mapstructure:"product_id"`
-	ProductImg       string           `json:"product_img" mapstructure:"product_img"`
-	Num              int              `json:"num" mapstructure:"num"`
-	PayAmount        int              `json:"pay_amount" mapstructure:"pay_amount"`
-	PostAmount       int              `json:"post_amount" mapstructure:"post_amount"`
-	RefundAmount     int              `json:"refund_amount" mapstructure:"refund_amount"`
-	RefundPostAmount int              `json:"refund_post_amount" mapstructure:"refund_post_amount"`
-	AftersaleService []string         `json:"aftersale_service" mapstructure:"aftersale_service"`
-	SkuSpec          []order.SkuSpecs `json:"sku_spec" mapstructure:"sku_spec"`
-	OrderId          string           `json:"order_id" mapstructure:"order_id"`
-	CreateTime       string           `json:"create_time" mapstructure:"create_time"`
-	PartType         int              `json:"part_type" mapstructure:"part_type"`
+	ProductName      string            `json:"product_name" mapstructure:"product_name"`
+	ProductId        int64             `json:"product_id" mapstructure:"product_id"`
+	ProductImg       string            `json:"product_img" mapstructure:"product_img"`
+	Num              int               `json:"num" mapstructure:"num"`
+	PayAmount        int               `json:"pay_amount" mapstructure:"pay_amount"`
+	PostAmount       int               `json:"post_amount" mapstructure:"post_amount"`
+	RefundAmount     int               `json:"refund_amount" mapstructure:"refund_amount"`
+	RefundPostAmount int               `json:"refund_post_amount" mapstructure:"refund_post_amount"`
+	AftersaleService []string          `json:"aftersale_service" mapstructure:"aftersale_service"`
+	SkuSpec          unit.PropertyOPTS `json:"sku_spec" mapstructure:"sku_spec"`
+	OrderId          string            `json:"order_id" mapstructure:"order_id"`
+	CreateTime       string            `json:"create_time" mapstructure:"create_time"`
+	PartType         int               `json:"part_type" mapstructure:"part_type"`
 }
 
 type AftersaleRecordItems struct {
