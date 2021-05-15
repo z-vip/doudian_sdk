@@ -551,3 +551,10 @@ func (a *App) OrderCodeErpShopBindOrderCode(arg interface{}) (body string, err e
 	err = a.base.RequestApi("orderCode.erpShopBindOrderCode", arg, &body)
 	return
 }
+
+// 售后单列表查询
+// https://op.jinritemai.com/docs/api-docs/15/464
+func (a *App) refundListSearch(arg interface{}) (body aftersale.AftersaleInfo, err error) {
+	err = a.base.RequestApi("trade.refundListSearch", arg, &body)
+	return
+}
