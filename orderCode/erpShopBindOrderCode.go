@@ -15,9 +15,9 @@ type ArgErpShopBindOrderList struct {
 	OrderId       int                         `paramName:"order_id,optional" json:"order_id,optional"`
 }
 type ArgErpShopBindOrderDetail struct {
-	Lot01      string `paramName:"lot01,optional" json:"lot01,optional"`
-	ShopQty    int    `paramName:"shop_qty,optional" json:"shop_qty,optional"`
-	SkuBarcode string `paramName:"sku_barcode,optional" json:"sku_barcode,optional"`
-	UniqueCode string `paramName:"unique_code,optional" json:"unique_code,optional"`
 	ComboId    int    `paramName:"combo_id,optional" json:"combo_id,optional"`
+	Lot01      string `paramName:"lot01,optional" json:"lot01,optional"`
+	SkuBarcode string `paramName:"sku_barcode,optional" json:"sku_barcode,optional"`
+	ShopQty    int    `paramName:"shop_qty,optional" json:"shop_qty,optional"`
+	UniqueCode string `paramName:"unique_code,optional" json:"unique_code,optional"`
 }
