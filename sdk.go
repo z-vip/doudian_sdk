@@ -558,3 +558,11 @@ func (a *App) RefundListSearch(arg interface{}) (body aftersale.AftersaleInfo, e
 	err = a.base.RequestApi("trade.refundListSearch", arg, &body)
 	return
 }
+
+//商品接口 product
+//商品发布新接口
+//product/addV2	https://op.jinritemai.com/docs/api-docs/14/249
+func (a *App) ProductAddV2(arg interface{}) (body product.AddV2, err error) {
+	err = a.base.RequestApi("product.addV2", arg, &body)
+	return
+}
