@@ -252,14 +252,6 @@ func (a *App) SkuDetail(sid unit.SkuID) (sku.ResponseDetail, error) {
 	return body, nil
 }
 
-// SkuEditPrice 修改商品sku的价格
-// op参数的实现 sku.Detail 可调用 App.SkuDetail、App.SkuList 方法
-// https://op.jinritemai.com/docs/api-docs/14/84
-func (a *App) SkuEditPrice(op unit.SkuOperate, p float64) error {
-	arg := ParamMap{"product_id": op.GetProductID(), "sku_id": op.GetSkuID(), "price": unit.PriceToYuan(p)}
-	return a.base.NewRequest("sku.editPrice", arg, nil)
-}
-
 // OrderList 订单列表
 // https://op.jinritemai.com/docs/api-docs/15/55
 func (a *App) OrderList(arg order.ArgList) (order.ResponseList, error) {
