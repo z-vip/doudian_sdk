@@ -564,18 +564,6 @@ func (a *App) ShopGetShopCategory(cid string) (body []shop.Category, err error) 
 ==商品API==
 */
 //添加商品
-// /product/addV2 	https://op.jinritemai.com/docs/api-docs/14/249
-func (a *App) ProductAddV2(arg interface{}) (body product.AddV2, err error) {
-	err = a.base.RequestApi("product.addV2", arg, &body)
-	return
-}
-
-//修改商品
-// /product/editV2 	https://op.jinritemai.com/docs/api-docs/14/250
-func (a *App) ProductEditV2(arg interface{}) (err error) {
-	err = a.base.RequestApi("product.editV2", arg, nil)
-	return
-}
 
 // sku/editCode 	https://op.jinritemai.com/docs/api-docs/14/86
 func (a *App) SkuSyncStock(arg interface{}) (err error) {
@@ -587,6 +575,25 @@ func (a *App) SkuSyncStock(arg interface{}) (err error) {
 // sku/editCode 	https://op.jinritemai.com/docs/api-docs/14/86
 func (a *App) SkuEditCode(arg interface{}) (err error) {
 	err = a.base.RequestApi("sku.editCode", arg, nil)
+	return
+}
+
+///sku/editPrice https://op.jinritemai.com/docs/api-docs/14/84
+func (a *App) SkuEditPrice(arg interface{}) (err error) {
+	err = a.base.RequestApi("sku.editPrice", arg, nil)
+	return
+}
+
+// /product/addV2 	https://op.jinritemai.com/docs/api-docs/14/249
+func (a *App) ProductAddV2(arg interface{}) (body product.AddV2, err error) {
+	err = a.base.RequestApi("product.addV2", arg, &body)
+	return
+}
+
+//修改商品
+// /product/editV2 	https://op.jinritemai.com/docs/api-docs/14/250
+func (a *App) ProductEditV2(arg interface{}) (err error) {
+	err = a.base.RequestApi("product.editV2", arg, nil)
 	return
 }
 
