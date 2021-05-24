@@ -260,22 +260,6 @@ func (a *App) SkuEditPrice(op unit.SkuOperate, p float64) error {
 	return a.base.NewRequest("sku.editPrice", arg, nil)
 }
 
-// SkuSyncStock 修改商品sku的库存
-// op参数的实现 sku.Detail 可调用 App.SkuDetail、App.SkuList 方法
-// https://op.jinritemai.com/docs/api-docs/14/85
-func (a *App) SkuSyncStock(op unit.SkuOperate, n uint16) error {
-	arg := ParamMap{"product_id": op.GetProductID(), "sku_id": op.GetSkuID(), "stock_num": n}
-	return a.base.NewRequest("sku.syncStock", arg, nil)
-}
-
-// SkuEditCode 修改商品sku的编码
-// op参数的实现 sku.Detail 可调用 App.SkuDetail、App.SkuList 方法
-// https://op.jinritemai.com/docs/api-docs/14/86
-func (a *App) SkuEditCode(op unit.SkuOperate, c string) error {
-	arg := ParamMap{"product_id": op.GetProductID(), "sku_id": op.GetSkuID(), "code": c}
-	return a.base.NewRequest("sku.editCode", arg, nil)
-}
-
 // OrderList 订单列表
 // https://op.jinritemai.com/docs/api-docs/15/55
 func (a *App) OrderList(arg order.ArgList) (order.ResponseList, error) {
@@ -522,6 +506,9 @@ func (a *App) OrderSettle(arg order.ArgSettle) (order.ResponseSettle, error) {
 	return body, nil
 }
 
+/*
+==订单API==
+*/
 // 订单搜索列表
 // https://op.jinritemai.com/docs/api-docs/15/464
 func (a *App) OrderSearchList(arg interface{}) (body order.SearchListInfo, err error) {
@@ -561,7 +548,7 @@ func (a *App) RefundListSearch(arg interface{}) (body aftersale.AftersaleInfo, e
 }
 
 /*
-店铺API
+==店铺API==
 */
 //获取店铺后台供商家发布商品的类目
 ///shop/getShopCategory2 	https://op.jinritemai.com/docs/api-docs/13/234
@@ -574,11 +561,49 @@ func (a *App) ShopGetShopCategory(cid string) (body []shop.Category, err error) 
 }
 
 /*
-商品API
+==商品API==
 */
-//获取店铺后台供商家发布商品的类目
-///shop/getShopCategory2 	https://op.jinritemai.com/docs/api-docs/13/234
+//添加商品
+// /product/addV2 	https://op.jinritemai.com/docs/api-docs/14/249
 func (a *App) ProductAddV2(arg interface{}) (body product.AddV2, err error) {
 	err = a.base.RequestApi("product.addV2", arg, &body)
+	return
+}
+
+//修改商品
+// /product/editV2 	https://op.jinritemai.com/docs/api-docs/14/250
+func (a *App) ProductEditV2(arg interface{}) (err error) {
+	err = a.base.RequestApi("product.editV2", arg, nil)
+	return
+}
+
+// sku/editCode 	https://op.jinritemai.com/docs/api-docs/14/86
+func (a *App) SkuSyncStock(arg interface{}) (err error) {
+	err = a.base.RequestApi("sku.syncStock", arg, nil)
+	return
+}
+
+//修改sku编码
+// sku/editCode 	https://op.jinritemai.com/docs/api-docs/14/86
+func (a *App) SkuEditCode(arg interface{}) (err error) {
+	err = a.base.RequestApi("sku.editCode", arg, nil)
+	return
+}
+
+//支持针对指定商品上架处理
+func (a *App) ProductSetOnline(productId string) (err error) {
+	arg := ParamMap{
+		"product_id": productId,
+	}
+	err = a.base.RequestApi("product.setOnline", arg, nil)
+	return
+}
+
+//支持针对指定商品下架处理
+func (a *App) ProductSetOffline(productId string) (err error) {
+	arg := ParamMap{
+		"product_id": productId,
+	}
+	err = a.base.RequestApi("product.setOffline", arg, nil)
 	return
 }

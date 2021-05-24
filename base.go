@@ -451,6 +451,7 @@ func (b *BaseApp) RequestApi(method string, input interface{}, output interface{
 	//fmt.Println("##data##", ret.Data)
 	//直接使用json反解析data到数据
 	dataByte, _ := json.Marshal(ret.Data)
+	//fmt.Println("##json##", string(dataByte))
 	return json.Unmarshal(dataByte, output)
 }
 

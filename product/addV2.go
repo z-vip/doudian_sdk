@@ -58,13 +58,13 @@ type AddV2 struct {
 	OutProductId   int    `json:"out_product_id"`
 	OuterProductId string `json:"outer_product_id"`
 	CreateTime     string `json:"create_time"`
-	Sku            []Sku  `json:"is_success"`
+	Sku            []*Sku `json:"sku"`
 }
 
 type Sku struct {
 	SkuId         int    `json:"sku_id"`
 	OutSkuId      int    `json:"out_sku_id"`
-	OuterSkuId    string `json:"outer_product_id"`
+	OuterSkuId    string `json:"outer_sku_id"`
 	Code          string `json:"create_time"`
 	SpecDetailId1 int    `json:"spec_detail_id1"`
 	SpecDetailId2 int    `json:"spec_detail_id2"`
