@@ -9,6 +9,7 @@ import (
 	"github.com/z-vip/doudian_sdk/product"
 	"github.com/z-vip/doudian_sdk/product/sku"
 	"github.com/z-vip/doudian_sdk/product/spec"
+	"github.com/z-vip/doudian_sdk/shop"
 	"github.com/z-vip/doudian_sdk/unit"
 	"time"
 )
@@ -559,9 +560,24 @@ func (a *App) RefundListSearch(arg interface{}) (body aftersale.AftersaleInfo, e
 	return
 }
 
-//商品接口 product
-//商品发布新接口
-//product/addV2	https://op.jinritemai.com/docs/api-docs/14/249
+/*
+店铺API
+*/
+//获取店铺后台供商家发布商品的类目
+///shop/getShopCategory2 	https://op.jinritemai.com/docs/api-docs/13/234
+func (a *App) ShopGetShopCategory(cid string) (body []shop.Category, err error) {
+	arg := ParamMap{
+		"cid": cid,
+	}
+	err = a.base.RequestApi("shop.getShopCategory", arg, &body)
+	return
+}
+
+/*
+商品API
+*/
+//获取店铺后台供商家发布商品的类目
+///shop/getShopCategory2 	https://op.jinritemai.com/docs/api-docs/13/234
 func (a *App) ProductAddV2(arg interface{}) (body product.AddV2, err error) {
 	err = a.base.RequestApi("product.addV2", arg, &body)
 	return
