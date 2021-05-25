@@ -555,7 +555,6 @@ func (a *App) ShopGetShopCategory(cid string) (body []shop.Category, err error) 
 /*
 ==商品API==
 */
-//添加商品
 
 // sku/editCode 	https://op.jinritemai.com/docs/api-docs/14/86
 func (a *App) SkuSyncStock(arg interface{}) (err error) {
@@ -576,6 +575,7 @@ func (a *App) SkuEditPrice(arg interface{}) (err error) {
 	return
 }
 
+//添加商品
 // /product/addV2 	https://op.jinritemai.com/docs/api-docs/14/249
 func (a *App) ProductAddV2(arg interface{}) (body product.AddV2, err error) {
 	err = a.base.RequestApi("product.addV2", arg, &body)
@@ -604,5 +604,15 @@ func (a *App) ProductSetOffline(productId string) (err error) {
 		"product_id": productId,
 	}
 	err = a.base.RequestApi("product.setOffline", arg, nil)
+	return
+}
+
+//根据商品分类获取对应的属性列表
+//https://op.jinritemai.com/docs/api-docs/14/94		/product/getCateProperty
+func (a *App) ProductGetCateProperty(categoryLeafId string) (body product.Category, err error) {
+	arg := ParamMap{
+		"category_leaf_id": categoryLeafId,
+	}
+	err = a.base.RequestApi("product.getCateProperty", arg, &body)
 	return
 }
