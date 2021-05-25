@@ -609,7 +609,7 @@ func (a *App) ProductSetOffline(productId string) (err error) {
 
 //根据商品分类获取对应的属性列表
 //https://op.jinritemai.com/docs/api-docs/14/94		/product/getCateProperty
-func (a *App) ProductGetCateProperty(categoryLeafId string) (body product.Category, err error) {
+func (a *App) ProductGetCateProperty(categoryLeafId string) (body []product.Category, err error) {
 	arg := ParamMap{
 		"category_leaf_id": categoryLeafId,
 	}
