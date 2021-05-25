@@ -2,6 +2,17 @@ package msg
 
 import "github.com/z-vip/doudian_sdk/unit"
 
+//订单信息基本结构体
+type TradeBase struct {
+	Pid         int64   `json:"p_id"`         // 父订单ID
+	SIds        []int64 `json:"s_ids"`        // 子订单ID列表
+	ShopID      int64   `json:"shop_id"`      //  店铺ID
+	CreateTime  int64   `json:"create_time"`  //  创建时间
+	OrderStatus int     `json:"order_status"` //父订单状态，订单创建消息的order_status值为"1"
+	OrderType   int     `json:"order_type"`   //订单类型
+	Biz         int8    `json:"biz"`          //订单业务类型
+}
+
 //订单创建消息,当买家下单，系统生成订单时，推送此消息
 type TradeCreate struct {
 	Pid         uint64   `json:"p_id"`         // 父订单ID
@@ -119,6 +130,64 @@ type TradeCanceled struct {
 	Biz          uint8    `json:"biz"`           //订单业务类型
 }
 
+/**
+买家收货信息变更申请消息
+商家开启当买家收货地址修改审核后，当发生修改时，推送此消息
+*/
+type TradeAddressChangeApplied struct {
+	TradeBase
+	UpdateTime      int64   `json:"update_time"`       //订单业务类型
+	PostReceiverMsg PostMsg `json:"post_receiver_msg"` //订单业务类型
+	ReceiverMsg     PostMsg `json:"receiver_msg"`      //订单业务类型
+}
+
+type PostMsg struct {
+	Name string  `json:"name"`
+	Tel  string  `json:"tel"`
+	Addr Address `json:"addr"`
+}
+
+// Address 收货地址
+type Address struct {
+	Street   unit.Relation `mapstructure:"street" json:"street"`
+	Detail   string        `mapstructure:"detail" json:"detail"`
+	Province unit.Relation `mapstructure:"province" json:"province"`
+	Town     unit.Relation `mapstructure:"town" json:"town"`
+}
+
+/**
+订单金额修改消息
+卖家主动修改货款价格成功，推送此消息
+卖家主动修改邮费成功，推送此消息
+*/
+type TradeAmountChanged struct {
+	TradeBase
+	TotalAmount int `mapstructure:"total_amount" json:"total_amount"`
+	PostAmount  int `mapstructure:"post_amount" json:"post_amount"`
+}
+
+/**
+订单部分发货消息
+买家付款后，卖家对订单中的部分商品发货，且父订单状态为「部分发货」时，推送此消息
+*/
+type TradePartlySellerShip struct {
+	TradeBase
+	TotalAmount int `mapstructure:"total_amount" json:"total_amount"`
+	PostAmount  int `mapstructure:"post_amount" json:"post_amount"`
+}
+
+/**
+订单已支付待处理
+拼团下单成功，买家完成支付后，但还未成团
+普通订单成功，买家完成支付后，触发风控拦截（pending状态一般会持续两小时）
+跨境订单支付成功后，等待运营上传身份证
+*/
+type TradePending struct {
+	TradeBase
+	TotalAmount int `mapstructure:"total_amount" json:"total_amount"`
+	PostAmount  int `mapstructure:"post_amount" json:"post_amount"`
+}
+
 ////////////////////////////////////////////////////
 //以下为售后相关消息
 ////////////////////////////////////////////////////
@@ -136,6 +205,8 @@ type RefundBase struct {
 	RefundVoucherNum uint8      `json:"refund_voucher_num"` //申请退款的卡券的数量
 	ReasonCode       uint8      `json:"reason_code"`        //申请售后原因码
 	LatestRecord     string     `json:"latest_record"`      //最近一条操作记录
+	ArbitrateId      string     `json:"arbitrate_id"`       //仲裁单ID
+	ArbitrateStatus  int        `json:"arbitrate_status"`   //仲裁状态
 }
 
 /**
@@ -219,6 +290,75 @@ type RefundSuccess struct {
 type RefundClosed struct {
 	RefundBase
 	CloseTime uint64 `json:"close_time"` //售后关闭时间
+}
+
+/**
+买家发起客服仲裁消息
+商家拒绝买家请求，买家可申请平台客服介入、发起客服仲裁，此时推送此消息
+*/
+type ArbitrateApplied struct {
+	RefundBase
+	ArbitrateId     string `json:"arbitrate_id"`     //仲裁单ID
+	ArbitrateStatus int    `json:"arbitrate_status"` //仲裁状态
+}
+
+/**
+客服仲裁结果消息
+客服仲裁确定结果时，推送此消息
+*/
+type ArbitrateAudited struct {
+	RefundBase
+	ArbitrateConclusion int `json:"arbitrate_conclusion"` //仲裁结果： 1. 支持买家 2. 支持商家 3. 支持买家并立即退款
+}
+
+/**
+买家取消仲裁消息
+买家申请客服介入、发起客服仲裁后，而后又取消客服仲裁时，推送此消息
+*/
+type ArbitrateCancelled struct {
+	RefundBase
+}
+
+/**
+商家上传仲裁凭证消息
+买家申请平台客服介入、发起客服仲裁后，客服要求商家上传凭证；商家上传仲裁凭证时，推送此消息
+*/
+type ArbitrateSubmited struct {
+	RefundBase
+}
+
+/**
+客服要求商家上传凭证消息
+买家申请平台客服介入、发起客服仲裁后，客服处理，要求商家上传凭证时，推送此消息
+*/
+type ArbitrateSubmiting struct {
+	RefundBase
+}
+
+/**
+卖家收到买家换货包裹，确认换货并二次发货消息
+已发货订单，买家上传换货物流，卖家确认收货并二次发货时，推送此消息
+*/
+type ExchangeComfirmed struct {
+	RefundBase
+}
+
+/**
+售后超时时长变更消息
+售后超时时间发生变化时，会推送此消息
+*/
+type ExpirationChange struct {
+	RefundBase
+	StatusDeadline string `json:"status_deadline"` //变更后的超时时间戳
+}
+
+/**
+买家修改售后申请消息
+买家修改交易逆向申请时，推送此消息
+*/
+type RefundModified struct {
+	RefundBase
+	ModifyTime int64 `json:"modify_time"` //售后申请修改时间
 }
 
 //开发者在消息推送地址指向的本地服务中，通过解析消息体，可以获取每条消息的具体信息。
