@@ -424,7 +424,7 @@ func (b *BaseApp) RefreshAccessToken(refreshToken string) (*App, error) {
 func (b *BaseApp) RequestApi(method string, input interface{}, output interface{}) error {
 	var ret BaseResp
 	data := b.ParseParams(method, input)
-	//fmt.Println("api request:", data.Encode())
+	fmt.Println("api request:", data.Encode())
 
 	b.RequestUrl = b.gatewayURL + "/" + strings.ReplaceAll(method, ".", "/")
 	resp, err := http.PostForm(b.RequestUrl, data)
@@ -440,7 +440,7 @@ func (b *BaseApp) RequestApi(method string, input interface{}, output interface{
 	decoder.UseNumber()
 	_ = decoder.Decode(&ret)
 	if ret.ErrNo != 0 || ret.Message != "success" {
-		return fmt.Errorf("response error %d %s", ret.ErrNo, ret.Message)
+		return fmt.Errorf("response error: %d %s", ret.ErrNo, ret.Message)
 	}
 	if output == nil {
 		return nil
@@ -448,7 +448,7 @@ func (b *BaseApp) RequestApi(method string, input interface{}, output interface{
 	if ret.Data == nil {
 		return errors.New("response error data is nil")
 	}
-	//fmt.Println("##data##", ret.Data)
+	fmt.Println("##data##", ret.Data)
 	//直接使用json反解析data到数据
 	dataByte, _ := json.Marshal(ret.Data)
 	//fmt.Println("##json##", string(dataByte))

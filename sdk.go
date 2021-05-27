@@ -10,6 +10,7 @@ import (
 	"github.com/z-vip/doudian_sdk/product/sku"
 	"github.com/z-vip/doudian_sdk/product/spec"
 	"github.com/z-vip/doudian_sdk/shop"
+	"github.com/z-vip/doudian_sdk/trade"
 	"github.com/z-vip/doudian_sdk/unit"
 	"time"
 )
@@ -552,10 +553,18 @@ func (a *App) ShopGetShopCategory(cid string) (body []shop.Category, err error) 
 	return
 }
 
+/**
+订单接口
+*/
+//order/AddressAppliedSwitch
+func (a *App) OrderAddressAppliedSwitch(arg interface{}) (body string, err error) {
+	err = a.base.RequestApi("order.AddressAppliedSwitch", arg, nil)
+	return
+}
+
 /*
 ==商品API==
 */
-
 // sku/editCode 	https://op.jinritemai.com/docs/api-docs/14/86
 func (a *App) SkuSyncStock(arg interface{}) (err error) {
 	err = a.base.RequestApi("sku.syncStock", arg, nil)
@@ -614,5 +623,15 @@ func (a *App) ProductGetCateProperty(categoryLeafId string) (body []product.Cate
 		"category_leaf_id": categoryLeafId,
 	}
 	err = a.base.RequestApi("product.getCateProperty", arg, &body)
+	return
+}
+
+/**
+trade 售后接口
+*/
+//支持卖家按照售后单维度查询数据。推荐开发者使用此接口替代/refund/orderList和/afterSale/orderList
+//https://op.jinritemai.com/docs/api-docs/17/254	/trade/refundListSearch
+func (a *App) TradeRefundListSearch(arg interface{}) (body trade.RefundListSearchInfo, err error) {
+	err = a.base.RequestApi("trade.refundListSearch", arg, &body)
 	return
 }
