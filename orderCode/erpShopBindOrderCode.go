@@ -12,7 +12,7 @@ type ArgErpShopBindOrderList struct {
 	LogisticsId   float64                     `paramName:"logistics_id,optional" json:"logistics_id,optional"`
 	OrderCode     string                      `paramName:"order_code,optional" json:"order_code,optional"`
 	OrderDetail   []ArgErpShopBindOrderDetail `paramName:"order_detail,optional" json:"order_detail,optional"`
-	OrderId       float64                     `paramName:"order_id,optional" json:"order_id,optional"`
+	OrderId       string                      `paramName:"order_id,optional" json:"order_id,optional"`
 }
 type ArgErpShopBindOrderDetail struct {
 	ComboId    float64 `paramName:"combo_id,optional" json:"combo_id,optional"`
