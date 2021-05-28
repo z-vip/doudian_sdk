@@ -317,16 +317,6 @@ func (a *App) OrderReplyService(id unit.ServiceID, reply string) error {
 	return a.base.NewRequest("order.replyService", ParamMap{"id": id, "reply": reply}, nil)
 }
 
-// OrderLogisticsCompanyList 回复服务请求
-// https://op.jinritemai.com/docs/api-docs/16/76
-func (a *App) OrderLogisticsCompanyList() (logistics.ResponseLogisticsCompanyList, error) {
-	var body logistics.ResponseLogisticsCompanyList
-	if err := a.base.NewRequest("order.logisticsCompanyList", nil, &body); err != nil {
-		return body, err
-	}
-	return body, nil
-}
-
 // OrderAddOrderRemark 添加订单备注，给订单加旗标
 // https://op.jinritemai.com/docs/api-docs/15/141
 func (a *App) OrderAddOrderRemark(id unit.OrderID, remark string, IsAddStar string, star string) error {
@@ -554,8 +544,17 @@ func (a *App) ShopGetShopCategory(cid string) (body []shop.Category, err error) 
 }
 
 /**
-订单接口
+==订单接口==order==
 */
+
+//获取快递公司列表
+//order/logisticsAdd	https://op.jinritemai.com/docs/api-docs/16/389
+func (a *App) OrderLogisticsCompanyList() (body []order.LogisticsCompany, err error) {
+	err = a.base.RequestApi("order.logisticsCompanyList", nil, &body)
+	return
+}
+
+//订单地址
 //order/AddressAppliedSwitch
 func (a *App) OrderAddressAppliedSwitch(arg interface{}) (body string, err error) {
 	err = a.base.RequestApi("order.AddressAppliedSwitch", arg, nil)
@@ -563,8 +562,9 @@ func (a *App) OrderAddressAppliedSwitch(arg interface{}) (body string, err error
 }
 
 /*
-==商品API==
+==商品API==sku==
 */
+
 // sku/editCode 	https://op.jinritemai.com/docs/api-docs/14/86
 func (a *App) SkuSyncStock(arg interface{}) (err error) {
 	err = a.base.RequestApi("sku.syncStock", arg, nil)
@@ -584,6 +584,9 @@ func (a *App) SkuEditPrice(arg interface{}) (err error) {
 	return
 }
 
+/*
+==商品API==product==
+*/
 //添加商品
 // /product/addV2 	https://op.jinritemai.com/docs/api-docs/14/249
 func (a *App) ProductAddV2(arg interface{}) (body product.AddV2, err error) {

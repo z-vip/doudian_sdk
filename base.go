@@ -461,8 +461,11 @@ func (b *BaseApp) ParseParams(method string, input interface{}) url.Values {
 	uri.Add("access_token", *b.accessToken)
 
 	uri.Add("method", method)
-	paramByte, _ := json.Marshal(input)
-	paramJson := string(paramByte)
+	var paramJson = "{}"
+	if input != nil {
+		paramByte, _ := json.Marshal(input)
+		paramJson = string(paramByte)
+	}
 	uri.Add("param_json", paramJson)
 	timestamp := time.Now().Format(unit.TimeYmdHis)
 	uri.Add("timestamp", timestamp)
