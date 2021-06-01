@@ -584,6 +584,13 @@ func (a *App) SkuEditPrice(arg interface{}) (err error) {
 	return
 }
 
+//修改sku库存
+//sku/syncStockBatch	https://op.jinritemai.com/docs/api-docs/14/298
+func (a *App) SkuSyncStockBatch(arg interface{}) (err error) {
+	err = a.base.RequestApi("sku.syncStockBatch", arg, nil)
+	return
+}
+
 /*
 ==商品API==product==
 */
