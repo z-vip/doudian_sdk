@@ -476,19 +476,6 @@ func (a *App) AfterSaleBuyerRefund(arg aftersale.ArgAfterSaleBuyerRefund) error 
 	return a.base.NewRequest("afterSale.buyerRefund", arg, nil)
 }
 
-// OrderSettle 查询订单账单明细
-// https://op.jinritemai.com/docs/api-docs/46/204
-func (a *App) OrderSettle(arg order.ArgSettle) (order.ResponseSettle, error) {
-	if arg.Size == 0 {
-		arg.Size = 10
-	}
-	var body order.ResponseSettle
-	if err := a.base.NewRequest("order.settle", arg, &body); err != nil {
-		return body, err
-	}
-	return body, nil
-}
-
 /*
 ==订单API==
 */
@@ -558,6 +545,13 @@ func (a *App) OrderLogisticsCompanyList() (body []order.LogisticsCompany, err er
 //order/AddressAppliedSwitch
 func (a *App) OrderAddressAppliedSwitch(arg interface{}) (body string, err error) {
 	err = a.base.RequestApi("order.AddressAppliedSwitch", arg, nil)
+	return
+}
+
+//查询订单账单明细
+//order/settle	https://op.jinritemai.com/docs/api-docs/46/204
+func (a *App) OrderSettle(arg interface{}) (body order.SettleList, err error) {
+	err = a.base.RequestApi("order.settle", arg, &body)
 	return
 }
 
