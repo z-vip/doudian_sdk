@@ -4,15 +4,25 @@ type ArgSettle struct {
 	TimeType  string `json:"time_type"`  //时间类型筛选	0:结算时间 1:下单时间
 	StartTime string `json:"start_time"` //查询开始时间
 	EndTime   string `json:"end_time"`   //查询结束时间,必须大于等于开始时间 开始时间和结束时间跨度最大30天
+	OrderId   string `json:"order_id"`   //子订单ID
+	ProductId string `json:"product_id"` //商品ID
+	PayType   string `json:"pay_type"`   //结算账户：0全部、1微信(升级前)、2微信、3支付宝、4周期打款
+	FlowType  string `json:"flow_type"`  //业务类型，不传则默认为0 0:全部 1:广告 2:联盟 3:频道 4:免费
+	Page      uint8  `json:"page"`
+	Size      uint8  `json:"size"`
 }
 
 // ArgList OrderList方法的参数
 type SettleList struct {
+	Data  []SettleItem `json:"data"`
+	Total int64        `json:"total"` //查询账单条数
+}
+
+type SettleItem struct {
 	OrderInfo   OrderInfo   `json:"order_info"`   //订单相关信息
 	SettleInfo  SettleInfo  `json:"settle_info"`  //结算相关信息
 	IncomeInfo  IncomeInfo  `json:"income_info"`  //收入相关信息
 	OutcomeInfo OutcomeInfo `json:"outcome_info"` //支出相关信息
-	Total       int64       `json:"total"`        //查询账单条数
 }
 
 type OrderInfo struct {

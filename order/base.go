@@ -151,3 +151,8 @@ const (
 	DouJia        CB = 14 // 抖+
 	ChuanShanJia  CB = 15 // 穿山甲
 )
+
+const (
+	STT01 = "0" // 结算时间
+	STT02 = "1" // 下单时间
+)
